@@ -1,0 +1,7 @@
+{
+  "name": "resortplatform",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
