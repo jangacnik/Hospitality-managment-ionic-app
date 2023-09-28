@@ -1,0 +1,7 @@
+{
+  "name": "ResortPlatform",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

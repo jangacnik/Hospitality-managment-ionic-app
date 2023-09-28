@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">resortplatform</string>
-    <string name="title_activity_main">resortplatform</string>
-    <string name="package_name">ionic.resortplatform</string>
-    <string name="custom_url_scheme">ionic.resortplatform</string>
-</resources>
