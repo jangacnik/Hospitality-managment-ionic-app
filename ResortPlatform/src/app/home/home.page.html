@@ -13,5 +13,43 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-router-outlet></ion-router-outlet>
+  <app-login *ngIf="showLogin"
+  (loggedInSuccess)="onLoginSuccess()"></app-login>
+  <div *ngIf="!showLogin" style="height: 100%">
+    <ion-title  style="margin-top: 20px">
+      Welcome {{usr?.firstName}}
+    </ion-title>
+    <ion-split-pane></ion-split-pane>
+    <ion-accordion-group style="margin-top: 20px">
+      <ion-accordion value="profile">
+        <ion-item slot="header" color="light">
+          <ion-label>User Info</ion-label>
+        </ion-item>
+        <ion-list class="ion-padding" slot="content" *ngIf="usr">
+          <ion-item>Name: {{usr.firstName}} {{usr.lastName}}</ion-item>
+          <ion-item>Employee No.: {{usr.employeeNumber}}</ion-item>
+          <ion-item>E-Mail: {{usr.email}}</ion-item>
+        </ion-list>
+      </ion-accordion>
+    </ion-accordion-group>
+
+    <ion-accordion-group style="margin-top: 20px">
+      <ion-accordion value="tracking" style="max-height: 200px; overflow: auto">
+        <ion-item slot="header" color="light">
+          <ion-label>Meals this month: <ion-badge>{{usrWithTrack?.mealEntry?.mealCount}}</ion-badge> </ion-label>
+        </ion-item>
+        <ion-list class="ion-padding" slot="content" *ngIf="meals.mealCount && meals.meals">
+          <ion-item *ngFor="let item of meals.meals | keyvalue">{{item.key}} : {{item.value | date: "dd.MM.yyyy hh:mm"}}</ion-item>
+        </ion-list>
+      </ion-accordion>
+    </ion-accordion-group>
+    <div class="center" style="margin-top: 20px">
+      <ion-button id="present-alert" class="center" shape="round">Track meal</ion-button>
+      <ion-alert
+        trigger="present-alert"
+        header="Are you sure you want to track a new meal?"
+        [buttons]="confirmMealButtons"
+      ></ion-alert>
+    </div>
+  </div>
 </ion-content>
