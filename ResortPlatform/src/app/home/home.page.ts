@@ -12,12 +12,11 @@ import {MealEntry} from "../model/MealEntry";
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss']
 })
-export class HomePage implements OnInit{
+export class HomePage implements OnInit, OnChanges{
   usr: FoodTrackerUser | undefined = undefined;
   usrWithTrack : FoodTrackerUserWithMealEntry | undefined = undefined;
 
-  // @ts-ignore
-  meals: MealEntry;
+  meals: MealEntry | undefined;
   constructor(private storageService: StorageService, public userService: UserService) {
   }
 
@@ -48,7 +47,6 @@ export class HomePage implements OnInit{
     });
   }
 
-
   public confirmMealButtons = [
     {
       text: 'Cancel',
@@ -73,4 +71,22 @@ export class HomePage implements OnInit{
       },
     },
   ];
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+  }
+
+  camerasNotFound(e: Event) {
+    console.log(e);
+    // Display an alert modal here
+  }
+
+  cameraFound(e: Event) {
+    console.log(e);
+    // Log to see if the camera was found
+  }
+
+  onScanSuccess(result: string) {
+    console.log(result);
+  }
 }

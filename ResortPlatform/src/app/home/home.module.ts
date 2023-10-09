@@ -7,16 +7,18 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 
 import { HomePageRoutingModule } from './home-routing.module';
 import {LoginPageModule} from "./login/login.module";
+import {NgxScannerQrcodeModule} from "ngx-scanner-qrcode";
 
 @NgModule({
-  imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    ExploreContainerComponentModule,
-    HomePageRoutingModule,
-    LoginPageModule
-  ],
+    imports: [
+        IonicModule,
+        CommonModule,
+        FormsModule,
+        ExploreContainerComponentModule,
+        HomePageRoutingModule,
+        LoginPageModule,
+        NgxScannerQrcodeModule
+    ],
   declarations: [HomePage]
 })
 export class HomePageModule {}

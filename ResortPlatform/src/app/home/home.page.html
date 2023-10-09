@@ -13,7 +13,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-login *ngIf="showLogin"
+  <app-login *ngIf="!showLogin"
   (loggedInSuccess)="onLoginSuccess()"></app-login>
   <div *ngIf="!showLogin" style="height: 100%">
     <ion-title  style="margin-top: 20px">
@@ -32,14 +32,15 @@
         </ion-list>
       </ion-accordion>
     </ion-accordion-group>
-
     <ion-accordion-group style="margin-top: 20px">
       <ion-accordion value="tracking" style="max-height: 200px; overflow: auto">
         <ion-item slot="header" color="light">
           <ion-label>Meals this month: <ion-badge>{{usrWithTrack?.mealEntry?.mealCount}}</ion-badge> </ion-label>
         </ion-item>
-        <ion-list class="ion-padding" slot="content" *ngIf="meals.mealCount && meals.meals">
-          <ion-item *ngFor="let item of meals.meals | keyvalue">{{item.key}} : {{item.value | date: "dd.MM.yyyy hh:mm"}}</ion-item>
+        <ion-list class="ion-padding" slot="content" *ngIf="meals && meals.mealCount && meals.meals">
+          <ion-item *ngFor="let item of meals.meals | keyvalue">
+            {{item.key}} : {{item.value | date: "dd.MM.yyyy hh:mm"}}
+          </ion-item>
         </ion-list>
       </ion-accordion>
     </ion-accordion-group>
@@ -51,5 +52,21 @@
         [buttons]="confirmMealButtons"
       ></ion-alert>
     </div>
+
   </div>
+
+  <ngx-scanner-qrcode #action="scanner"
+                      (canplay)="cameraFound($event)"
+  ></ngx-scanner-qrcode>
+
+  <!-- data  -->
+  <span>{{ action.data.value | json }}</span><!-- value -->
+  <span>{{ action.data | async | json }}</span><!-- async -->
+
+  <!-- Loading -->
+  <p *ngIf="action.isLoading">⌛ Loading...</p>
+  <p *ngIf="action.isStart">⌛ Ready</p>
+
+  <!-- start -->
+  <button (click)="action.isStart ? action.stop() : action.start()">{{action.isStart ? 'Stop' : 'Start'}}</button>
 </ion-content>
