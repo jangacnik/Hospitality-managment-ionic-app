@@ -21,7 +21,6 @@ export class QrComponent  implements OnInit, AfterViewInit {
   }
   cameraFound(e: Event) {
     console.log(e);
-    this.action.start();
     // Log to see if the camera was found
   }
   onScanSuccess(result: ScannerQRCodeResult[]) {

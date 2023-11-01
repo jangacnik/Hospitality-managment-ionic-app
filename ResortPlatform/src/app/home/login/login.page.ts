@@ -31,8 +31,7 @@ export class LoginPage implements OnInit {
     this._authService.signin(this.loginForm.get("email")?.value, this.loginForm.get("password")?.value).subscribe(
       (res) =>
       {
-        this.storage.set("jwt", res.token);
-        this.storage.set("refresh", res.refreshToken);
+        this.storage.saveJwt(res.token, res.refreshToken);
         this.loggedInSuccess.emit();
       }
     );

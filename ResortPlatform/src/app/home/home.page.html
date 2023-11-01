@@ -13,8 +13,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-login *ngIf="!showLogin"
-  (loggedInSuccess)="onLoginSuccess()"></app-login>
+  <app-login *ngIf="showLogin"></app-login>
   <div *ngIf="!showLogin" style="height: 100%">
     <ion-title  style="margin-top: 20px">
       Welcome {{usr?.firstName}}

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {StorageService} from "../service/storage.service";
 
 @Component({
   selector: 'app-tabs',
@@ -7,6 +8,20 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
-  constructor() {}
-
+  constructor(private storageService: StorageService) {}
+  showTabs = false;
+  ngOnInit(): void {
+    this.storageService.get("jwt").then((value) => {
+      if (value) {
+        this.showTabs = true;
+      }
+    });
+    this.storageService.jwtChangedSub.subscribe((jwt) => {
+      if(jwt) {
+        this.showTabs = true;
+      } else {
+        this.showTabs = false;
+      }
+    })
+  }
 }

@@ -1,24 +1,30 @@
 import {Injectable} from '@angular/core';
 import {Storage} from "@ionic/storage-angular";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
-  public jwt: string = '';
+  jwtChangedSub = new BehaviorSubject<string>("");
   constructor(private storage: Storage) {
     this.storage.create().then(() => {
       this.storage.get("jwt").then((val) =>  {
-        this.jwt = val;
-        console.log(this.jwt);
+        this.jwtChangedSub.next(val);
       });
     });
   }
 
+  saveJwt(jwt: string, refresh: string) {
+    this.set("jwt", jwt);
+    this.set("refresh", refresh);
+    this.jwtChangedSub.next(jwt);
+  }
 
   // Create and expose methods that users of this service can
   // call, for example:
   public set(key: string, value: any) {
+
     this.storage.set(key, value);
   }
 

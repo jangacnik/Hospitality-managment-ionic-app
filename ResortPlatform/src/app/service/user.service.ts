@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {FoodTrackerUser} from "../model/FoodTrackerUser";
 import {Observable} from "rxjs";
 import {FoodTrackerUserWithMealEntry} from "../model/FoodTrackerUserWithMealEntry";
@@ -19,8 +19,14 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  public getUserInfo(): Observable<FoodTrackerUser> {
-    return this.http.get<FoodTrackerUser>("http://0.0.0.0:8888/api/v1/department/user/me");
+  public getUserInfo(jwt?:string): Observable<FoodTrackerUser> {
+    if (jwt) {
+      let headers = new HttpHeaders();
+      headers.set("Authorization", "Bearer " + jwt);
+      return this.http.get<FoodTrackerUser>("http://0.0.0.0:8888/api/v1/department/user/me", {headers: headers});
+    } else {
+      return this.http.get<FoodTrackerUser>("http://0.0.0.0:8888/api/v1/department/user/me");
+    }
   }
 
   public getCurrentMonthTracking(id: string): Observable<FoodTrackerUserWithMealEntry> {

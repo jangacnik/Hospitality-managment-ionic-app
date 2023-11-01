@@ -6,6 +6,7 @@ import {UserService} from "../service/user.service";
 import {FoodTrackerUser} from "../model/FoodTrackerUser";
 import {FoodTrackerUserWithMealEntry} from "../model/FoodTrackerUserWithMealEntry";
 import {MealEntry} from "../model/MealEntry";
+import {debounceTime, delay, retry, retryWhen} from "rxjs";
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,7 @@ import {MealEntry} from "../model/MealEntry";
 export class HomePage implements OnInit, OnChanges{
   usr: FoodTrackerUser | undefined = undefined;
   usrWithTrack : FoodTrackerUserWithMealEntry | undefined = undefined;
-
+  userLoggedIn: boolean = false;
   meals: MealEntry | undefined;
   constructor(private storageService: StorageService, public userService: UserService) {
   }
@@ -23,21 +24,23 @@ export class HomePage implements OnInit, OnChanges{
   showLogin = true;
 
   ngOnInit(): void {
-    this.storageService.get("jwt").then((value) => {
-      if (value) {
+    // this.storageService.get("jwt").then((value) => {
+    //   if (value) {
+    //     this.showLogin = false;
+    //     this.fetchUserInfo();
+    //   }
+    // });
+    this.storageService.jwtChangedSub.subscribe((jwt) => {
+      if(jwt) {
         this.showLogin = false;
-        this.fetchUserInfo();
+        this.fetchUserInfo(jwt);
       }
-    });
+    })
   }
 
-  onLoginSuccess() {
-    this.showLogin = false;
-    this.fetchUserInfo();
-  }
 
-  fetchUserInfo() {
-    this.userService.getUserInfo().subscribe((usr) => {
+  fetchUserInfo(jwt?: string) {
+    this.userService.getUserInfo(jwt).pipe(retry(2)).subscribe((usr) => {
       this.userService.foodTrackerUser = usr;
       this.usr = usr;
       this.userService.getCurrentMonthTracking(usr.employeeNumber).subscribe((tr) => {
