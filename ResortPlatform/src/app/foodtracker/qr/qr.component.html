@@ -1,0 +1,7 @@
+
+<ngx-scanner-qrcode #action="scanner"
+                    (canplay)="cameraFound($event)"
+                    (event)="onScanSuccess($event)"
+                    [isBeep]="false"
+                    [vibrate]="300"
+></ngx-scanner-qrcode>

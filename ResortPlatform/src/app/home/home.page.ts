@@ -76,17 +76,5 @@ export class HomePage implements OnInit, OnChanges{
     console.log(changes);
   }
 
-  camerasNotFound(e: Event) {
-    console.log(e);
-    // Display an alert modal here
-  }
 
-  cameraFound(e: Event) {
-    console.log(e);
-    // Log to see if the camera was found
-  }
-
-  onScanSuccess(result: string) {
-    console.log(result);
-  }
 }

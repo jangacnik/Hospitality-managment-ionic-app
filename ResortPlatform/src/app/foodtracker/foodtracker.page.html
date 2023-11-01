@@ -1,28 +1,33 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+      Food Tracker
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Food Tracker</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-grid>
-    <ion-row class="ion-justify-content-center">
-      <ion-col>
-        <ion-button expand="full" (click)="scan()" >Track</ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-justify-content-center">
-    <ion-col>
-      <ion-button expand="full">Meal overview</ion-button>
-    </ion-col>
-  </ion-row>
-  </ion-grid>
+  <ion-item>
+    <ion-button class="center-button" (click)="openDialog(true)">Scan QR Code</ion-button>
+  </ion-item>
+  <ion-item>
+    <ion-button class="center-button">Meals</ion-button>
 
+  </ion-item>
+
+  <ion-modal [isOpen]="openModal">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Modal</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="openDialog(false)">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <app-qr [isRecording]="openModal" (onQrScanned)="scanWasSuccessful($event)"></app-qr>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

@@ -54,19 +54,4 @@
     </div>
 
   </div>
-
-  <ngx-scanner-qrcode #action="scanner"
-                      (canplay)="cameraFound($event)"
-  ></ngx-scanner-qrcode>
-
-  <!-- data  -->
-  <span>{{ action.data.value | json }}</span><!-- value -->
-  <span>{{ action.data | async | json }}</span><!-- async -->
-
-  <!-- Loading -->
-  <p *ngIf="action.isLoading">⌛ Loading...</p>
-  <p *ngIf="action.isStart">⌛ Ready</p>
-
-  <!-- start -->
-  <button (click)="action.isStart ? action.stop() : action.start()">{{action.isStart ? 'Stop' : 'Start'}}</button>
 </ion-content>
