@@ -1,8 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Home
-    </ion-title>
+    <ion-title> Food Tracker </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,44 +11,108 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-login *ngIf="showLogin"></app-login>
+  <!-- <app-login *ngIf="showLogin"></app-login> -->
   <div *ngIf="!showLogin" style="height: 100%">
-    <ion-title  style="margin-top: 20px">
-      Welcome {{usr?.firstName}}
-    </ion-title>
+    <ion-title style="margin-top: 20px"> Welcome {{usr?.firstName}} </ion-title>
     <ion-split-pane></ion-split-pane>
-    <ion-accordion-group style="margin-top: 20px">
-      <ion-accordion value="profile">
-        <ion-item slot="header" color="light">
-          <ion-label>User Info</ion-label>
-        </ion-item>
-        <ion-list class="ion-padding" slot="content" *ngIf="usr">
-          <ion-item>Name: {{usr.firstName}} {{usr.lastName}}</ion-item>
-          <ion-item>Employee No.: {{usr.employeeNumber}}</ion-item>
-          <ion-item>E-Mail: {{usr.email}}</ion-item>
-        </ion-list>
-      </ion-accordion>
-    </ion-accordion-group>
+
+    <ion-item>
+      <ion-button class="center-button" (click)="openDialog(true)"
+        >Scan QR Code</ion-button
+      >
+    </ion-item>
+
+    <!-- TODO: Implementirat -->
+    <!-- <ion-item>
+      <ion-button class="center-button">Meals</ion-button>
+    </ion-item> -->
+
+    <ion-modal [isOpen]="openModal">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Modal</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="openDialog(false)">Close</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <app-qr
+            [isRecording]="openModal"
+            (onQrScanned)="scanWasSuccessful($event)"
+          ></app-qr>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+    <br />
+
+    <ion-item>
+      <ion-button class="center-button" (click)="openReservationDialog(true)">
+        Add reservation
+      </ion-button>
+    </ion-item>
+
+    <ion-modal [isOpen]="openReservationModal">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Add reservation</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="openReservationDialog(false)"
+                >Close</ion-button
+              >
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <ion-list>
+            <ion-item *ngFor="let opt of reservationOptions">
+              <ion-checkbox
+                [(ngModel)]="opt.checked"
+                (ionChange)="changeEvent($event)"
+                >{{opt.text}}</ion-checkbox
+              >
+            </ion-item>
+          </ion-list>
+          <ion-button
+            (click)="addReservationBtn()"
+            [disabled]="!isReservationBtnActive"
+            >Confirm selection</ion-button
+          >
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
     <ion-accordion-group style="margin-top: 20px">
       <ion-accordion value="tracking" style="max-height: 200px; overflow: auto">
         <ion-item slot="header" color="light">
-          <ion-label>Meals this month: <ion-badge>{{usrWithTrack?.mealEntry?.mealCount}}</ion-badge> </ion-label>
+          <ion-label
+            >Meals this month:
+            <ion-badge>{{usrWithTrack?.mealEntry?.mealCount}}</ion-badge>
+          </ion-label>
         </ion-item>
-        <ion-list class="ion-padding" slot="content" *ngIf="meals && meals.mealCount && meals.meals">
+        <ion-list
+          class="ion-padding"
+          slot="content"
+          *ngIf="meals && meals.mealCount && meals.meals"
+        >
           <ion-item *ngFor="let item of meals.meals | keyvalue">
             {{item.key}} : {{item.value | date: "dd.MM.yyyy hh:mm"}}
           </ion-item>
         </ion-list>
       </ion-accordion>
     </ion-accordion-group>
-    <div class="center" style="margin-top: 20px">
-      <ion-button id="present-alert" class="center" shape="round">Track meal</ion-button>
+    <!-- <div class="center" style="margin-top: 20px">
+      <ion-button id="present-alert" class="center" shape="round"
+        >Track meal</ion-button
+      >
       <ion-alert
         trigger="present-alert"
         header="Are you sure you want to track a new meal?"
         [buttons]="confirmMealButtons"
       ></ion-alert>
-    </div>
-
+    </div> -->
   </div>
 </ion-content>

@@ -6,20 +6,20 @@ import { HomePage } from './home.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { HomePageRoutingModule } from './home-routing.module';
-import {LoginPageModule} from "./login/login.module";
-import {NgxScannerQrcodeModule} from "ngx-scanner-qrcode";
-import {QrComponent} from "../foodtracker/qr/qr.component";
+// import { LoginPageModule } from './login/login.module';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
+import { QrComponent } from '../foodtracker/qr/qr.component';
 
 @NgModule({
-    imports: [
-        IonicModule,
-        CommonModule,
-        FormsModule,
-        ExploreContainerComponentModule,
-        HomePageRoutingModule,
-        LoginPageModule,
-        NgxScannerQrcodeModule
-    ],
-  declarations: [HomePage]
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    ExploreContainerComponentModule,
+    HomePageRoutingModule,
+    //LoginPageModule,
+    NgxScannerQrcodeModule,
+  ],
+  declarations: [HomePage],
 })
 export class HomePageModule {}

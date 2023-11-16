@@ -1,3 +1,9 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Login </ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content [fullscreen]="true">
   <div class="flex-center">
     <form [formGroup]="loginForm">
@@ -19,9 +25,10 @@
               formControlName="password"
             ></ion-input>
           </ion-item>
-          <ion-button color="dark" fill="clear" size="full"
+          <!-- TODO: Implementirat -->
+          <!-- <ion-button color="dark" fill="clear" size="full"
             >Pozabil geslo</ion-button
-          >
+          > -->
           <br />
           <ion-button size="full" (click)="login()">Login</ion-button>
         </ion-card-content>

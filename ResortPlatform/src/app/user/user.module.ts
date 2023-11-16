@@ -13,8 +13,8 @@ import { Tab3PageRoutingModule } from './user-routing.module';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    Tab3PageRoutingModule
+    Tab3PageRoutingModule,
   ],
-  declarations: [UserPage]
+  declarations: [UserPage],
 })
 export class UserPageModule {}
