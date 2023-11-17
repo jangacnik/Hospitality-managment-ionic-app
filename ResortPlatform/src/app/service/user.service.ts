@@ -55,4 +55,8 @@ export class UserService {
       dataModel
     );
   }
+
+  public getAllReservations(): Observable<void> {
+    return this.http.get<void>('http://localhost:8888/api/v1/reserve');
+  }
 }

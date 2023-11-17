@@ -32,6 +32,7 @@ export class HomePage implements OnInit, OnChanges {
   usrWithTrack: FoodTrackerUserWithMealEntry | undefined = undefined;
   userLoggedIn: boolean = false;
   meals: MealEntry | undefined;
+  reservations: any | undefined;
   constructor(
     private storageService: StorageService,
     public userService: UserService
@@ -52,6 +53,8 @@ export class HomePage implements OnInit, OnChanges {
         this.fetchUserInfo(jwt);
       }
     });
+
+    this.fetchAllReservationInfo();
   }
 
   fetchUserInfo(jwt?: string) {
@@ -68,6 +71,13 @@ export class HomePage implements OnInit, OnChanges {
             this.meals = this.usrWithTrack.mealEntry;
           });
       });
+  }
+
+  fetchAllReservationInfo() {
+    this.userService.getAllReservations().subscribe((val) => {
+      console.log(val);
+      this.reservations = val;
+    });
   }
 
   addReservationBtn() {

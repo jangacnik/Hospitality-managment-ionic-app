@@ -16,6 +16,8 @@
     <ion-title style="margin-top: 20px"> Welcome {{usr?.firstName}} </ion-title>
     <ion-split-pane></ion-split-pane>
 
+    <br />
+
     <ion-item>
       <ion-button class="center-button" (click)="openDialog(true)"
         >Scan QR Code</ion-button
@@ -46,6 +48,38 @@
       </ng-template>
     </ion-modal>
 
+    <ion-accordion-group style="margin-top: 20px">
+      <ion-accordion value="tracking" style="max-height: 200px; overflow: auto">
+        <ion-item slot="header" color="light">
+          <ion-label
+            >Meals this month:
+            <ion-badge>{{usrWithTrack?.mealEntry?.mealCount}}</ion-badge>
+          </ion-label>
+        </ion-item>
+        <ion-list
+          class="ion-padding"
+          slot="content"
+          *ngIf="meals && meals.mealCount && meals.meals"
+        >
+          <ion-item *ngFor="let item of meals.meals | keyvalue">
+            {{item.key}} : {{item.value | date: "dd.MM.yyyy hh:mm"}}
+          </ion-item>
+        </ion-list>
+      </ion-accordion>
+    </ion-accordion-group>
+    <!-- <div class="center" style="margin-top: 20px">
+      <ion-button id="present-alert" class="center" shape="round"
+        >Track meal</ion-button
+      >
+      <ion-alert
+        trigger="present-alert"
+        header="Are you sure you want to track a new meal?"
+        [buttons]="confirmMealButtons"
+      ></ion-alert>
+    </div> -->
+
+    <br />
+    <br />
     <br />
 
     <ion-item>
@@ -89,30 +123,31 @@
       <ion-accordion value="tracking" style="max-height: 200px; overflow: auto">
         <ion-item slot="header" color="light">
           <ion-label
-            >Meals this month:
-            <ion-badge>{{usrWithTrack?.mealEntry?.mealCount}}</ion-badge>
+            >Reservations this month:
+            <ion-badge>{{reservations?.length}}</ion-badge>
           </ion-label>
         </ion-item>
         <ion-list
           class="ion-padding"
           slot="content"
-          *ngIf="meals && meals.mealCount && meals.meals"
+          *ngIf="reservations && reservations.length > 0"
         >
-          <ion-item *ngFor="let item of meals.meals | keyvalue">
-            {{item.key}} : {{item.value | date: "dd.MM.yyyy hh:mm"}}
+          <ion-item *ngFor="let reservation of reservations">
+            <ion-avatar
+              slot="start"
+              style="position: absolute; top: 0.4rem; left: 0px"
+            >
+              <ion-icon name="id-card-outline" item-start></ion-icon>
+            </ion-avatar>
+            <ion-label style="margin-left: 1rem">
+              <h2>Name: {{reservation.name}}</h2>
+              <p>Employee Number: {{reservation.employeeNumber}}</p>
+              <p>Reservation Date: {{reservation.reservationDate}}</p>
+              <p>Meals: {{reservation.mealType}}</p>
+            </ion-label>
           </ion-item>
         </ion-list>
       </ion-accordion>
     </ion-accordion-group>
-    <!-- <div class="center" style="margin-top: 20px">
-      <ion-button id="present-alert" class="center" shape="round"
-        >Track meal</ion-button
-      >
-      <ion-alert
-        trigger="present-alert"
-        header="Are you sure you want to track a new meal?"
-        [buttons]="confirmMealButtons"
-      ></ion-alert>
-    </div> -->
   </div>
 </ion-content>
