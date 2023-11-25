@@ -1,6 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title> Food Tracker </ion-title>
+    <ion-title> Food Tracker</ion-title>
+    <img
+      src="/assets/VR_Black.svg"
+      style="height: 0.7rem; padding-inline: 20px"
+      slot="end"
+    />
   </ion-toolbar>
 </ion-header>
 
@@ -29,7 +34,7 @@
       <ion-button class="center-button">Meals</ion-button>
     </ion-item> -->
 
-    <ion-modal [isOpen]="openModal">
+    <ion-modal [isOpen]="openModal" backdropDismiss="false">
       <ng-template>
         <ion-header>
           <ion-toolbar>
@@ -88,7 +93,7 @@
       </ion-button>
     </ion-item>
 
-    <ion-modal [isOpen]="openReservationModal">
+    <ion-modal [isOpen]="openReservationModal" backdropDismiss="false">
       <ng-template>
         <ion-header>
           <ion-toolbar>
@@ -102,6 +107,12 @@
         </ion-header>
         <ion-content class="ion-padding">
           <ion-list>
+            <ion-item>
+              <ion-label
+                >Add reservation for date: {{tomorrowDate | date:
+                "dd.MM.yyyy"}}</ion-label
+              >
+            </ion-item>
             <ion-item *ngFor="let opt of reservationOptions">
               <ion-checkbox
                 [(ngModel)]="opt.checked"
@@ -140,11 +151,17 @@
               <ion-icon name="id-card-outline" item-start></ion-icon>
             </ion-avatar>
             <ion-label style="margin-left: 1rem">
-              <h2>Name: {{reservation.name}}</h2>
-              <p>Employee Number: {{reservation.employeeNumber}}</p>
-              <p>Reservation Date: {{reservation.reservationDate}}</p>
+              <h2>Reservation Date: {{reservation.reservationDate}}</h2>
               <p>Meals: {{reservation.mealType}}</p>
             </ion-label>
+            <ion-button
+              *ngIf="canDelete(reservation.reservationDate)"
+              id="delete-alert"
+              slot="end"
+              (click)="btnDeleteReservation(reservation.id, reservation.reservationDate)"
+            >
+              <ion-icon name="trash-outline" item-start></ion-icon>
+            </ion-button>
           </ion-item>
         </ion-list>
       </ion-accordion>

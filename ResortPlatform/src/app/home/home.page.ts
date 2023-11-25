@@ -14,6 +14,7 @@ import { FoodTrackerUser } from '../model/FoodTrackerUser';
 import { FoodTrackerUserWithMealEntry } from '../model/FoodTrackerUserWithMealEntry';
 import { MealEntry } from '../model/MealEntry';
 import { debounceTime, delay, retry, retryWhen } from 'rxjs';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -33,12 +34,33 @@ export class HomePage implements OnInit, OnChanges {
   userLoggedIn: boolean = false;
   meals: MealEntry | undefined;
   reservations: any | undefined;
+  tomorrowDate: Date = new Date();
+  tkString = '';
   constructor(
     private storageService: StorageService,
-    public userService: UserService
+    public userService: UserService,
+    private _toastController: ToastController,
+    private _alertController: AlertController
   ) {}
 
   showLogin = true;
+
+  public alertButtons = [
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => {
+        console.log('Alert canceled');
+      },
+    },
+    {
+      text: 'Confirm',
+      role: 'confirm',
+      handler: () => {
+        console.log('Alert confirmed');
+      },
+    },
+  ];
 
   ngOnInit(): void {
     // this.storageService.get("jwt").then((value) => {
@@ -55,6 +77,7 @@ export class HomePage implements OnInit, OnChanges {
     });
 
     this.fetchAllReservationInfo();
+    this.tomorrowDate.setDate(this.tomorrowDate.getDate() + 1);
   }
 
   fetchUserInfo(jwt?: string) {
@@ -80,6 +103,16 @@ export class HomePage implements OnInit, OnChanges {
     });
   }
 
+  async presentToast(msg: string) {
+    const toast = await this._toastController.create({
+      message: msg,
+      duration: 4000,
+      position: 'bottom',
+    });
+
+    await toast.present();
+  }
+
   addReservationBtn() {
     this.openReservationModal = false;
     let mealType = [];
@@ -93,19 +126,49 @@ export class HomePage implements OnInit, OnChanges {
     }
 
     let currentDate = new Date();
-    let dd = String(currentDate.getDate()).padStart(2, '0');
-    let mm = String(currentDate.getMonth() + 1).padStart(2, '0'); //January is 0!
-    let yyyy = currentDate.getFullYear();
-    let reservationDate = yyyy + '-' + mm + '-' + dd;
+    this.tomorrowDate.setDate(currentDate.getDate() + 1);
 
     const dataModel = {
       employeeNumber: this.usr.employeeNumber,
       mealType: mealType,
-      reservationDate: reservationDate,
     };
     console.log(dataModel);
     this.userService.addReservation(dataModel).subscribe((val) => {
       console.log(val);
+      this.presentToast('Reservation was successfully added!');
+    });
+    //TODO: Error - "there was a problem adding the booking"
+  }
+
+  canDelete(date) {
+    let reservationDate = new Date(date).toISOString().split('T')[0];
+    let currentDate = new Date().toISOString().split('T')[0];
+    if (reservationDate > currentDate) {
+      return true;
+    }
+    return false;
+  }
+
+  async btnDeleteReservation(reservationId: number, date: string) {
+    let alert = await this._alertController.create({
+      header: 'Delete reservation',
+      message: 'Are you sure you want to delete the reservation for ' + date,
+      buttons: this.alertButtons,
+    });
+    await alert.present();
+    console.log(reservationId);
+    alert.onDidDismiss().then((data) => {
+      console.log(data);
+      this.storageService.jwtChangedSub.subscribe((jwt) => {
+        if (jwt) {
+          this.userService
+            .deleteReservationById(reservationId, jwt)
+            .subscribe((val) => {
+              console.log(val);
+              this.presentToast('Reservation was successfully deleted!');
+            });
+        }
+      });
     });
   }
 
@@ -173,6 +236,7 @@ export class HomePage implements OnInit, OnChanges {
         .subscribe((tr) => {
           this.usrWithTrack = tr;
           this.meals = this.usrWithTrack.mealEntry;
+          this.presentToast('Meal was successfully added!');
         });
     });
   }

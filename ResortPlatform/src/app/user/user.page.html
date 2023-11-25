@@ -27,7 +27,7 @@
 
   <ion-list [inset]="true" *ngIf="usr">
     <ion-item>
-      <ion-label>Department: {{usr.department}}</ion-label>
+      <ion-label>Departments: {{usr.departments.join(", ")}}</ion-label>
     </ion-item>
     <ion-item>
       <ion-label>Employee No: {{usr.employeeNumber}}</ion-label>

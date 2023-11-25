@@ -56,6 +56,24 @@ export class UserService {
     );
   }
 
+  public deleteReservationById(
+    reservationId: number,
+    jwt: string
+  ): Observable<void> {
+    let headers = new HttpHeaders();
+    headers.set('Authorization', 'Bearer ' + jwt);
+    let body = {
+      id: reservationId,
+      employeeNumber: '02',
+      mealType: ['DINNER'],
+      reservationDate: '2023-11-26',
+    };
+    return this.http.delete<void>(`http://localhost:8888/api/v1/reserve/`, {
+      headers: headers,
+      body: body,
+    });
+  }
+
   public getAllReservations(): Observable<void> {
     return this.http.get<void>('http://localhost:8888/api/v1/reserve');
   }
