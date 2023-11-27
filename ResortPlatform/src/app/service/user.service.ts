@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FoodTrackerUser } from '../model/FoodTrackerUser';
 import { Observable } from 'rxjs';
 import { FoodTrackerUserWithMealEntry } from '../model/FoodTrackerUserWithMealEntry';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -24,12 +25,12 @@ export class UserService {
       let headers = new HttpHeaders();
       headers.set('Authorization', 'Bearer ' + jwt);
       return this.http.get<FoodTrackerUser>(
-        'http://localhost:8888/api/v1/department/user/me',
+        environment.baseUrlTest + 'department/user/me',
         { headers: headers }
       );
     } else {
       return this.http.get<FoodTrackerUser>(
-        'http://localhost:8888/api/v1/department/user/me'
+        environment.baseUrlTest + 'department/user/me'
       );
     }
   }
@@ -38,22 +39,16 @@ export class UserService {
     id: string
   ): Observable<FoodTrackerUserWithMealEntry> {
     return this.http.get<FoodTrackerUserWithMealEntry>(
-      'http://localhost:8888/api/v1/track/' + id
+      environment.baseUrlTest + 'track/' + id
     );
   }
 
   public trackMeal(dataModel: any): Observable<void> {
-    return this.http.post<void>(
-      'http://localhost:8888/api/v1/track',
-      dataModel
-    );
+    return this.http.post<void>(environment.baseUrlTest + 'track', dataModel);
   }
 
   public addReservation(dataModel: any): Observable<void> {
-    return this.http.post<void>(
-      'http://localhost:8888/api/v1/reserve',
-      dataModel
-    );
+    return this.http.post<void>(environment.baseUrlTest + 'reserve', dataModel);
   }
 
   public deleteReservationById(
@@ -68,16 +63,13 @@ export class UserService {
       mealType: ['DINNER'],
       reservationDate: '2023-11-26',
     };
-    return this.http.delete<void>(
-      `http://localhost:8888/resort/api/v1/reserve/`,
-      {
-        headers: headers,
-        body: body,
-      }
-    );
+    return this.http.delete<void>(environment.baseUrlTest + `reserve/`, {
+      headers: headers,
+      body: body,
+    });
   }
 
   public getAllReservations(): Observable<void> {
-    return this.http.get<void>('http://localhost:8888/api/v1/reserve');
+    return this.http.get<void>(environment.baseUrlTest + 'reserve');
   }
 }

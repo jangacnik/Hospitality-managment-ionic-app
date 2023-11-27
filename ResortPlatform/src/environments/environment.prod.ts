@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  baseUrlTest: "https://vestlia.eu/resort/api/v1/",
 };
