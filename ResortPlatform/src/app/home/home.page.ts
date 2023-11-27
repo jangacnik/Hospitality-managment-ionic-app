@@ -98,7 +98,6 @@ export class HomePage implements OnInit, OnChanges {
 
   fetchAllReservationInfo() {
     this.userService.getAllReservations().subscribe((val) => {
-      console.log(val);
       this.reservations = val;
     });
   }
@@ -136,6 +135,7 @@ export class HomePage implements OnInit, OnChanges {
     this.userService.addReservation(dataModel).subscribe((val) => {
       console.log(val);
       this.presentToast('Reservation was successfully added!');
+      this.fetchAllReservationInfo();
     });
     //TODO: Error - "there was a problem adding the booking"
   }

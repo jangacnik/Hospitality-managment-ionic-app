@@ -68,10 +68,13 @@ export class UserService {
       mealType: ['DINNER'],
       reservationDate: '2023-11-26',
     };
-    return this.http.delete<void>(`http://localhost:8888/api/v1/reserve/`, {
-      headers: headers,
-      body: body,
-    });
+    return this.http.delete<void>(
+      `http://localhost:8888/resort/api/v1/reserve/`,
+      {
+        headers: headers,
+        body: body,
+      }
+    );
   }
 
   public getAllReservations(): Observable<void> {
