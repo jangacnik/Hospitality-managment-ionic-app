@@ -50,7 +50,7 @@
                 *ngIf="meals && meals.mealCount && meals.meals"
               >
                 <ion-item *ngFor="let item of meals.meals | keyvalue">
-                  {{item.key}} : {{item.value | date: "dd.MM.yyyy hh:mm"}}
+                  {{item.key}} : {{item.value | date: "dd.MM.yyyy HH:mm"}}
                 </ion-item>
               </ion-list>
             </ion-accordion>

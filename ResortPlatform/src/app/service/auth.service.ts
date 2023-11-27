@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { StorageService } from './storage.service';
 import { JwtModel } from '../model/JwtModel';
+import {environment} from "../../environments/environment";
 @Injectable({
   providedIn: 'root',
 })
@@ -11,7 +12,7 @@ export class AuthService {
 
   signin(email: string, pass: string): Observable<JwtModel> {
     return this.http.post<JwtModel>(
-      'http://localhost:8888/api/v1/auth/signin',
+      environment.baseUrlTest+'auth/signin',
       {
         email: email,
         password: pass,
