@@ -82,22 +82,22 @@
                 slot="content"
                 *ngIf="reservations && reservations.length > 0"
               >
-                <ion-item *ngFor="let reservation of reservations">
-                  <ion-avatar
+                <ion-item *ngFor="let reservation of reservations | keyvalue">
+                  <span
                     slot="start"
-                    style="position: absolute; top: 0.4rem; left: 0px"
+                    style="position: absolute; top: 0.8rem; left: 0px"
+                    >{{reservation.key}}:</span
                   >
-                    <ion-icon name="id-card-outline" item-start></ion-icon>
-                  </ion-avatar>
                   <ion-label style="margin-left: 1rem">
-                    <h2>Reservation Date: {{reservation.reservationDate}}</h2>
-                    <p>Meals: {{reservation.mealType}}</p>
+                    <h2>
+                      Reservation Date: {{reservation.value.reservationDate}}
+                    </h2>
+                    <p>Meals: {{reservation.value.mealType}}</p>
                   </ion-label>
                   <ion-button
-                    *ngIf="canDelete(reservation.reservationDate)"
-                    id="delete-alert"
+                    *ngIf="canDelete(reservation.value.reservationDate)"
                     slot="end"
-                    (click)="btnDeleteReservation(reservation.id, reservation.reservationDate)"
+                    (click)="btnDeleteReservation(reservation.value.id, reservation.value.reservationDate)"
                   >
                     <ion-icon name="trash-outline" item-start></ion-icon>
                   </ion-button>
@@ -132,21 +132,6 @@
         </ion-content>
       </ng-template>
     </ion-modal>
-
-    <!-- <div class="center" style="margin-top: 20px">
-      <ion-button id="present-alert" class="center" shape="round"
-        >Track meal</ion-button
-      >
-      <ion-alert
-        trigger="present-alert"
-        header="Are you sure you want to track a new meal?"
-        [buttons]="confirmMealButtons"
-      ></ion-alert>
-    </div> -->
-
-    <!-- <br />
-    <br />
-    <br /> -->
 
     <ion-modal [isOpen]="openReservationModal" backdropDismiss="false">
       <ng-template>

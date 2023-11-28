@@ -63,7 +63,7 @@ export class UserService {
       mealType: ['DINNER'],
       reservationDate: '2023-11-26',
     };
-    return this.http.delete<void>(environment.baseUrlTest + `reserve/`, {
+    return this.http.delete<void>(environment.baseUrlTest + `reserve`, {
       headers: headers,
       body: body,
     });

@@ -49,16 +49,10 @@ export class HomePage implements OnInit, OnChanges {
     {
       text: 'Cancel',
       role: 'cancel',
-      handler: () => {
-        console.log('Alert canceled');
-      },
     },
     {
       text: 'Confirm',
       role: 'confirm',
-      handler: () => {
-        console.log('Alert confirmed');
-      },
     },
   ];
 
@@ -131,9 +125,7 @@ export class HomePage implements OnInit, OnChanges {
       employeeNumber: this.usr.employeeNumber,
       mealType: mealType,
     };
-    console.log(dataModel);
     this.userService.addReservation(dataModel).subscribe((val) => {
-      console.log(val);
       this.presentToast('Reservation was successfully added!');
       this.fetchAllReservationInfo();
     });
@@ -156,19 +148,19 @@ export class HomePage implements OnInit, OnChanges {
       buttons: this.alertButtons,
     });
     await alert.present();
-    console.log(reservationId);
     alert.onDidDismiss().then((data) => {
-      console.log(data);
-      this.storageService.jwtChangedSub.subscribe((jwt) => {
-        if (jwt) {
-          this.userService
-            .deleteReservationById(reservationId, jwt)
-            .subscribe((val) => {
-              console.log(val);
-              this.presentToast('Reservation was successfully deleted!');
-            });
-        }
-      });
+      if (data.role == 'confirm') {
+        this.storageService.jwtChangedSub.subscribe((jwt) => {
+          if (jwt) {
+            this.userService
+              .deleteReservationById(reservationId, jwt)
+              .subscribe((val) => {
+                this.fetchAllReservationInfo();
+                this.presentToast('Reservation was successfully deleted!');
+              });
+          }
+        });
+      }
     });
   }
 
@@ -210,9 +202,7 @@ export class HomePage implements OnInit, OnChanges {
   //   },
   // ];
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
 
   openDialog(isOpen: boolean) {
     this.openModal = isOpen;
@@ -224,7 +214,6 @@ export class HomePage implements OnInit, OnChanges {
 
   scanWasSuccessful(json: string) {
     this.openModal = false;
-    console.log(json);
     const dataModel = {
       employeeNumber: this.usr.employeeNumber,
       qrPasscode: json,
