@@ -5,3 +5,11 @@
                     [isBeep]="false"
                     [vibrate]="300"
 ></ngx-scanner-qrcode>
+  <ion-item>
+    <ion-select
+      [(ngModel)]="selectedCamera" label="Camera" placeholder="Choose camera"
+                (ionChange)="onSelect($event)">
+        <ion-select-option *ngFor="let device of devices"  [value]="device">{{device.label}}</ion-select-option>
+
+    </ion-select>
+  </ion-item>

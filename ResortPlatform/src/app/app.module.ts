@@ -17,7 +17,8 @@ import {NgxScannerQrcodeModule} from "ngx-scanner-qrcode";
     IonicStorageModule.forRoot(), HttpClientModule, NgxScannerQrcodeModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
