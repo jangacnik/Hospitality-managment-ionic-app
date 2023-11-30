@@ -7,6 +7,7 @@ import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 import {AsyncPipe, JsonPipe, NgForOf, NgIf} from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import {FormsModule} from "@angular/forms";
+import {ZXingScannerModule} from "@zxing/ngx-scanner";
 
 const routes: Routes = [
   {
@@ -24,16 +25,17 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [QrComponent],
-  imports: [
-    RouterModule.forChild(routes),
-    IonicModule,
-    AsyncPipe,
-    JsonPipe,
-    NgIf,
-    NgxScannerQrcodeModule,
-    NgForOf,
-    FormsModule,
-  ],
+    imports: [
+        RouterModule.forChild(routes),
+        IonicModule,
+        AsyncPipe,
+        JsonPipe,
+        NgIf,
+        NgxScannerQrcodeModule,
+        NgForOf,
+        FormsModule,
+        ZXingScannerModule,
+    ],
   providers: [BarcodeScanner],
   exports: [RouterModule, QrComponent],
 })

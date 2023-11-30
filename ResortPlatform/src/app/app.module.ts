@@ -10,11 +10,13 @@ import {IonicStorageModule} from "@ionic/storage-angular";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {JwtInterceptor} from "./interceptor/jwt.interceptor";
 import {NgxScannerQrcodeModule} from "ngx-scanner-qrcode";
+import {ZXingScannerModule} from "@zxing/ngx-scanner";
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
-    IonicStorageModule.forRoot(), HttpClientModule, NgxScannerQrcodeModule],
+    IonicStorageModule.forRoot(), HttpClientModule, NgxScannerQrcodeModule,
+    ZXingScannerModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
