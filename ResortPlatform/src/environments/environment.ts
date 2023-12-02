@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrlTest: "http://0.0.0.0:8888/api/v1/",
+  baseUrlTest: 'http://localhost:8888/api/v1/',
   // baseUrlTest: "https://vestlia.eu/resort/api/v1/",
 };
 
