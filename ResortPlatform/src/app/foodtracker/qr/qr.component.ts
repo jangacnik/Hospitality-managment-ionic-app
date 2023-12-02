@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Barcode, BarcodeScanner} from "@capacitor-mlkit/barcode-scanning";
 import {AlertController} from "@ionic/angular";
-import {NgxScannerQrcodeComponent, ScannerQRCodeResult} from "ngx-scanner-qrcode";
+import {NgxScannerQrcodeComponent, ScannerQRCodeDevice, ScannerQRCodeResult} from "ngx-scanner-qrcode";
+import {ZXingScannerComponent} from "@zxing/ngx-scanner";
 
 @Component({
   selector: 'app-qr',
@@ -9,25 +9,42 @@ import {NgxScannerQrcodeComponent, ScannerQRCodeResult} from "ngx-scanner-qrcode
   styleUrls: ['./qr.component.scss'],
 })
 export class QrComponent  implements OnInit, AfterViewInit {
-
   @Output() onQrScanned:EventEmitter<any> = new EventEmitter<string>();
-  @ViewChild('action') action!: NgxScannerQrcodeComponent;
+  // @ViewChild('action') action!: NgxScannerQrcodeComponent;
+
+  @ViewChild('scanner') scanner!: ZXingScannerComponent;
   constructor(private alertController: AlertController) { }
+  selectedCamera: MediaDeviceInfo;
+  devices: MediaDeviceInfo[] = [];
   ngOnInit(): void {
   }
-  camerasNotFound(e: Event) {
-    console.log(e);
-    // Display an alert modal here
+  camerasFoundHandler(e: any[]) {
+    if (this.devices.length == 0) {
+      this.devices = e;
+      console.log("device list");
+      console.log( this.devices);
+    }
+    const backDevice = e.find(d => d.label.toLowerCase().includes("back"));
+    if (backDevice) {
+      this.scanner.device = backDevice;
+      this.selectedCamera = backDevice;
+    }
   }
-  cameraFound(e: Event) {
-    console.log(e);
-    // Log to see if the camera was found
-  }
-  onScanSuccess(result: ScannerQRCodeResult[]) {
-    this.onQrScanned.emit(result[0].value);
-    this.action.stop();
+
+
+  scanSuccessHandler(e) {
+    this.onQrScanned.emit(e);
   }
   ngAfterViewInit(): void {
-    this.action.start();
+
   }
+
+  onSelect(event) {
+    this.scanner.enable = false;
+    this.selectedCamera = event.detail.value;
+    this.scanner.device = this.selectedCamera;
+    this.scanner.enable = true;
+  }
+
+
 }

@@ -4,8 +4,10 @@ import { HomePage } from './home.page';
 import { QrComponent } from '../foodtracker/qr/qr.component';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
-import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
+import {AsyncPipe, JsonPipe, NgForOf, NgIf} from '@angular/common';
 import { IonicModule } from '@ionic/angular';
+import {FormsModule} from "@angular/forms";
+import {ZXingScannerModule} from "@zxing/ngx-scanner";
 
 const routes: Routes = [
   {
@@ -23,14 +25,17 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [QrComponent],
-  imports: [
-    RouterModule.forChild(routes),
-    IonicModule,
-    AsyncPipe,
-    JsonPipe,
-    NgIf,
-    NgxScannerQrcodeModule,
-  ],
+    imports: [
+        RouterModule.forChild(routes),
+        IonicModule,
+        AsyncPipe,
+        JsonPipe,
+        NgIf,
+        NgxScannerQrcodeModule,
+        NgForOf,
+        FormsModule,
+        ZXingScannerModule,
+    ],
   providers: [BarcodeScanner],
   exports: [RouterModule, QrComponent],
 })
