@@ -22,6 +22,9 @@ export class JwtInterceptor implements HttpInterceptor, OnInit {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    req = req.clone({
+      headers: req.headers.append('Access-Control-Allow-Origin', `*`),
+    });
     if (req.headers.get('Authorization')) {
       return next.handle(req);
     }
