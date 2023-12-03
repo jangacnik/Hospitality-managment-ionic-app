@@ -85,6 +85,8 @@
   --ion-tab-bar-background: #f6f1eb;
 
   --ion-card-background: #ccaf8a;
+
+  --ion-logo-url: url(/assets/VR_Black.svg);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -156,6 +158,8 @@
     --ion-color-light-contrast-rgb: 255, 255, 255;
     --ion-color-light-shade: #1e2023;
     --ion-color-light-tint: #383a3e;
+
+    --ion-logo-url: url(/assets/VR_White.svg);
   }
 
   /*
@@ -191,6 +195,10 @@
     --ion-color-step-950: #f2f2f2;
 
     --ion-item-background: #000000;
+
+    --ion-toolbar-background: #1f1f1f;
+
+    --ion-tab-bar-background: #1f1f1f;
 
     --ion-card-background: #1c1c1d;
   }

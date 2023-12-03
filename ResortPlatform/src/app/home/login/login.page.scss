@@ -1,3 +1,7 @@
+#site-logo {
+  content: var(--ion-logo-url);
+}
+
 ion-button[color="dark"] {
   text-transform: initial;
 }
