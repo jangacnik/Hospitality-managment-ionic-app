@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { UserService } from '../service/user.service';
+import { ToastController } from '@ionic/angular';
 
 interface ChecklistItem {
   //TODO: naret model (deletnit to)
@@ -33,9 +34,10 @@ export class TodoListPage implements OnInit {
   //   { label: 'TODO 2', done: false },
   //   { label: 'TODO 3', done: false },
   // ];
-  public dataStatusMsg = '';
+  public dataStatusMsg: string = '';
   public selectedDate = new Date();
-  public taskLists;
+  public taskLists: any;
+  public completedTasks: number[] = [];
   public showScrollButton: boolean = false;
 
   // @HostListener('window:scroll', [])
@@ -44,11 +46,24 @@ export class TodoListPage implements OnInit {
   //   this.showScrollButton = window.scrollY > 1; // Adjust the threshold as needed
   // }
 
-  constructor(private _userService: UserService) {}
+  constructor(
+    private _userService: UserService,
+    private _toastController: ToastController
+  ) {}
 
   ngOnInit() {
     this.setTimeZone();
     this.fetchTaskLists();
+  }
+
+  countNumOfCompletedTasks(taskList: any) {
+    let numOfCompleted = 0;
+    for (let task of taskList) {
+      if (task.completed) {
+        numOfCompleted += 1;
+      }
+    }
+    return numOfCompleted;
   }
 
   fetchTaskLists() {
@@ -61,38 +76,43 @@ export class TodoListPage implements OnInit {
             this.dataStatusMsg = 'No data for this date';
           } else {
             this.dataStatusMsg = '';
+
+            // Count number of completed tasks
+            for (let taskList of this.taskLists) {
+              let num = this.countNumOfCompletedTasks(taskList.tasks);
+              this.completedTasks.push(num);
+            }
           }
         },
         error: (error) => {
-          this.dataStatusMsg = 'Something went wrong';
+          this.dataStatusMsg =
+            'There was problem fetching to-do list for this date';
         },
       });
   }
 
-  toggleDone(
-    indexI: number,
-    indexJ: number,
-    taskListId: string,
-    taskId: string
-  ) {
+  toggleDone(task: any, taskList: any, indexI: number) {
     let user = this._userService.foodTrackerUser;
     const dataModel = {
+      //TODO: model
       user: {
         userId: user.employeeNumber,
         name: user.firstName,
         surname: user.lastName,
       },
-      taskListId: taskListId,
-      taskId: taskId,
+      taskListId: taskList.id,
+      taskId: task.id,
     };
 
     this._userService.changeTaskStatus(dataModel).subscribe({
       next: (val) => {
-        this.taskLists[indexI]['tasks'][indexJ].completed =
-          !this.taskLists[indexI]['tasks'][indexJ].completed;
+        this.completedTasks[indexI] = this.countNumOfCompletedTasks(
+          taskList.tasks
+        );
       },
       error: (err) => {
-        console.log('implement error msg'); //TODO
+        task.completed = !task.completed;
+        this.presentToast('There was problem ticking the task');
       },
     });
   }
@@ -127,4 +147,16 @@ export class TodoListPage implements OnInit {
   //   document.body.scrollTop = 0; // For Safari
   //   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
   // }
+
+  async presentToast(msg: string) {
+    //TODO: premaknit v nek service za vse komponente
+    const toast = await this._toastController.create({
+      message: msg,
+      duration: 4000,
+      position: 'bottom',
+      color: 'danger',
+    });
+
+    await toast.present();
+  }
 }

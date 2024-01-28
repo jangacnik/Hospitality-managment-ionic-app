@@ -18,9 +18,11 @@
   <p>{{dataStatusMsg}}</p>
   <ion-accordion-group expand="inset">
     <ion-accordion *ngFor="let taskList of taskLists; let i = index">
-      <ion-item slot="header" color="dark">
+      <ion-item slot="header" color="primary">
         <ion-label>{{taskList.title}}</ion-label>
-        <ion-label slot="end">0/{{taskList.tasks.length}}</ion-label>
+        <ion-label slot="end"
+          >{{completedTasks[i]}}/{{taskList.tasks.length}}</ion-label
+        >
       </ion-item>
       <ion-item
         slot="content"
@@ -28,9 +30,9 @@
         *ngFor="let task of taskList.tasks; let j = index"
       >
         <ion-checkbox
-          [checked]="task.completed"
+          [(ngModel)]="task.completed"
           [class]="task.completed ? 'item-done' : ''"
-          (click)="toggleDone(i,i, taskList.id, task.id)"
+          (ionChange)="toggleDone(task, taskList, i)"
           >{{task.title}}</ion-checkbox
         >
       </ion-item>
