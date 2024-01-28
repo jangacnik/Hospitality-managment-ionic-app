@@ -13,7 +13,7 @@ export class UserService {
     this._foodTrackerUser = value;
   }
   get foodTrackerUser() {
-    return this.foodTrackerUser;
+    return this._foodTrackerUser;
   }
 
   private _foodTrackerUser: FoodTrackerUser | undefined;
@@ -71,5 +71,18 @@ export class UserService {
 
   public getAllReservations(): Observable<void> {
     return this.http.get<void>(environment.baseUrlTest + 'reserve');
+  }
+
+  public getTaskList(date: string): Observable<void> {
+    return this.http.get<void>(
+      environment.baseUrlTest + `task/archive/${date}`
+    );
+  }
+
+  public changeTaskStatus(dataModel: any): Observable<void> {
+    return this.http.post<void>(
+      environment.baseUrlTest + 'task/archive/status',
+      dataModel
+    );
   }
 }

@@ -9,28 +9,40 @@ const routes: Routes = [
     children: [
       {
         path: 'home',
-        loadChildren: () => import('../home/home.module').then(m => m.HomePageModule)
+        loadChildren: () =>
+          import('../home/home.module').then((m) => m.HomePageModule),
       },
       {
         path: 'foodtracker',
-        loadChildren: () => import('../foodtracker/foodtracker.module').then(m => m.FoodtrackerPageModule)
+        loadChildren: () =>
+          import('../foodtracker/foodtracker.module').then(
+            (m) => m.FoodtrackerPageModule
+          ),
+      },
+      {
+        path: 'todo-list',
+        loadChildren: () =>
+          import('../todo-list/todo-list.module').then(
+            (m) => m.TodoListPageModule
+          ),
       },
       {
         path: 'user',
-        loadChildren: () => import('../user/user.module').then(m => m.UserPageModule)
+        loadChildren: () =>
+          import('../user/user.module').then((m) => m.UserPageModule),
       },
       {
         path: '',
         redirectTo: '/tabs/home',
-        pathMatch: 'full'
-      }
-    ]
+        pathMatch: 'full',
+      },
+    ],
   },
   {
     path: '',
     redirectTo: '/tabs/home',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({

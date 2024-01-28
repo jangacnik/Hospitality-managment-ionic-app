@@ -8,6 +8,10 @@
       <ion-icon name="fast-food-outline"></ion-icon>
       <ion-label>Food Tracker</ion-label>
     </ion-tab-button> -->
+    <ion-tab-button tab="todo-list" href="/tabs/todo-list" *ngIf="showTabs">
+      <ion-icon name="clipboard-outline"></ion-icon>
+      <ion-label>Todo List</ion-label>
+    </ion-tab-button>
     <ion-tab-button tab="user" href="/tabs/user" *ngIf="showTabs">
       <ion-icon name="person-outline"></ion-icon>
       <ion-label>Profile</ion-label>

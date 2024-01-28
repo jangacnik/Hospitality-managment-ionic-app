@@ -1,0 +1,9 @@
+.flexContainer {
+  display: flex;
+  justify-content: space-between; /* This property places items at the beginning and end of the container */
+  align-items: center;
+}
+
+.item-done {
+  text-decoration: line-through;
+}

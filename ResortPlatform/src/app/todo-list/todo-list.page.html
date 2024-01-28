@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Todo List</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="flexContainer">
+    <ion-button (click)="changeDate(-1)">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <p>{{selectedDate | date : 'dd.MM.yyyy'}}</p>
+    <ion-button (click)="changeDate(1)" [disabled]="isButtonDisabled()">
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <p>{{dataStatusMsg}}</p>
+  <ion-accordion-group expand="inset">
+    <ion-accordion *ngFor="let taskList of taskLists; let i = index">
+      <ion-item slot="header" color="dark">
+        <ion-label>{{taskList.title}}</ion-label>
+        <ion-label slot="end">0/{{taskList.tasks.length}}</ion-label>
+      </ion-item>
+      <ion-item
+        slot="content"
+        color="light"
+        *ngFor="let task of taskList.tasks; let j = index"
+      >
+        <ion-checkbox
+          [checked]="task.completed"
+          [class]="task.completed ? 'item-done' : ''"
+          (click)="toggleDone(i,i, taskList.id, task.id)"
+          >{{task.title}}</ion-checkbox
+        >
+      </ion-item>
+    </ion-accordion>
+  </ion-accordion-group>
+
+  <!-- Scroll to Top Button -->
+  <!-- <ion-button
+    (click)="scrollToTop()"
+    class="scroll-to-top-button"
+    *ngIf="showScrollButton"
+  >
+    <ion-icon name="arrow-up"></ion-icon>
+  </ion-button> -->
+</ion-content>
