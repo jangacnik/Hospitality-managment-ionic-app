@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'ResortPlatform',
+  appId: 'io.hospify',
+  appName: 'Vestlia',
   webDir: 'www',
   server: {
     androidScheme: 'https'

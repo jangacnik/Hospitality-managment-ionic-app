@@ -1,8 +1,8 @@
 {
-  "name": "ResortPlatform",
-  "description": "An Ionic project",
+  "name": "Vestlia",
+  "description": "Vestlia resort managment app",
   "version": "0.0.1",
-  "author": "Ionic Framework",
+  "author": "Plejsholder",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
