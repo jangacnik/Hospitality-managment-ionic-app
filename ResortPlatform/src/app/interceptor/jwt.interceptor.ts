@@ -28,6 +28,9 @@ export class JwtInterceptor implements HttpInterceptor, OnInit {
     if (req.headers.get('Authorization')) {
       return next.handle(req);
     }
+    if (req.headers.get('refreshToken')) {
+      return next.handle(req);
+    }
     if (!this.jwt) {
       return next.handle(req);
     }

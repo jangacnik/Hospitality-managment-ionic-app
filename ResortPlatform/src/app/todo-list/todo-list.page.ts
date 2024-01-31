@@ -52,7 +52,6 @@ export class TodoListPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.setTimeZone();
     this.fetchTaskLists();
   }
 
