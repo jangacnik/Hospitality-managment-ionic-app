@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
   ) {
     this.platform.ready().then(() => {
       this.platform.resume.subscribe(async () => {
-        console.log('resume'); //TODO: brisi za release
         this.refreshFun();
       });
     });
@@ -45,6 +44,7 @@ export class AppComponent implements OnInit {
       if (refresh) {
         this._authService.refreshToken(refresh).subscribe((res) => {
           this._storageService.saveJwt(res.token, res.refreshToken);
+          this.fetchUserInfo(res.token);
         });
       }
     });

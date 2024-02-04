@@ -1,39 +1,54 @@
 <ion-header [translucent]="true">
   <ion-toolbar style="text-align: center">
-    <img id="site-logo" style="height: 0.7rem; padding-inline: 20px" />
+    <img id="site-logo" style="height: 0.7rem; padding-inline: 20px"/>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <div class="flex-center">
-    <form [formGroup]="loginForm">
-      <ion-card>
-        <ion-card-content>
-          <ion-item lines="full">
+<ion-content class="bg" [fullscreen]="false">
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-xs="9" size-md="9">
+        <form [formGroup]="loginForm">
+          <ion-item lines="full" class="input-item">
             <ion-input
               label="Email"
               labelPlacement="floating"
               type="email"
               formControlName="email"
             ></ion-input>
+            <ion-icon name="person-circle-outline" slot="start"></ion-icon>
           </ion-item>
-          <ion-item lines="full">
+          <br><br>
+          <ion-item lines="full" class="input-item">
             <ion-input
               label="Password"
               labelPlacement="floating"
               type="password"
               formControlName="password"
             ></ion-input>
+            <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
           </ion-item>
           <!-- TODO: Implementirat -->
           <!-- <br />
           <ion-button color="dark" fill="clear" size="full"
             ><u>Forgot password</u></ion-button
           > -->
-          <br />
-          <ion-button size="full" (click)="login()">Login</ion-button>
-        </ion-card-content>
-      </ion-card>
-    </form>
+          <br/>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <ion-button shape="round" fill="outline" size="large" expand="full" (click)="login()">SIGN IN</ion-button>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div class="flex-center">
   </div>
 </ion-content>

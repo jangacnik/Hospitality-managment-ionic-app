@@ -53,15 +53,14 @@ export class UserService {
 
   public deleteReservationById(
     reservationId: number,
-    jwt: string
+    jwt: string,
+    reservationDate: string,
   ): Observable<void> {
     let headers = new HttpHeaders();
     headers.set('Authorization', 'Bearer ' + jwt);
     let body = {
       id: reservationId,
-      employeeNumber: '02',
-      mealType: ['DINNER'],
-      reservationDate: '2023-11-26',
+      reservationDate: reservationDate,
     };
     return this.http.delete<void>(environment.baseUrlTest + `reserve`, {
       headers: headers,

@@ -14,9 +14,20 @@ import {ZXingScannerModule} from "@zxing/ngx-scanner";
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
+  imports: [BrowserModule, AppRoutingModule,
     IonicStorageModule.forRoot(), HttpClientModule, NgxScannerQrcodeModule,
-    ZXingScannerModule],
+    ZXingScannerModule,
+    IonicModule.forRoot({
+      platform: {
+        /** The default `desktop` function returns false for devices with a touchscreen.
+         * This is not always wanted, so this function tests the User Agent instead.
+         **/
+        'desktop': (win) => {
+          const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(win.navigator.userAgent);
+          return !isMobile;
+        }
+      },
+    }),],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

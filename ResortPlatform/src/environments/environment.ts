@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  // baseUrlTest: 'http://192.168.0.20:8888/api/v1/',
-  baseUrlTest: "https://vestlia.eu/resort/api/v1/",
+  baseUrlTest: 'http://192.168.0.153:8888/api/v1/'
 };
 
 /*

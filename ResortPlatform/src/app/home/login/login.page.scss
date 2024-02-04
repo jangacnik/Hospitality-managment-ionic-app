@@ -5,3 +5,62 @@
 ion-button[color="dark"] {
   text-transform: initial;
 }
+
+ion-grid{
+  height: 100%;
+}
+ion-row{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.input-item {
+  --ion-item-background:#f6f1eb;
+  border-color: #ccaf8a;
+  color: #ccaf8a;
+  --ion-color-dark: #ccaf8a;
+  --background: #f6f1eb !important;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  ion-icon {
+    color: #ccaf8a;
+    --ion-color-dark: #ccaf8a;
+
+  }
+  ion-input {
+    align-self: center;
+    width: 100%;
+    height: 100%;
+    --ion-border-width: 0;
+  }
+}
+
+ion-content {
+   --background: url('../../../assets/backgrounds/bg_login.svg') no-repeat center/cover;
+  --ion-background-color:#ffffff;
+
+ }
+
+ion-button {
+  --background: #f6f1eb;
+  --background-hover: #af8550;
+  --background-activated: #af8550;
+  --background-focused: #af8550;
+
+  --border-width: 1px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  ion-item {
+    --ion-item-background:#f6f1eb;
+  }
+  ion-input {
+    color: #ccaf8a;
+    --ion-color-dark: #ccaf8a;
+    --background: #f6f1eb !important;
+    --ion-border-width: 0;
+  }
+}

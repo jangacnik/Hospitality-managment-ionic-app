@@ -67,6 +67,8 @@ export class HomePage implements OnInit, OnChanges {
       if (jwt) {
         this.showLogin = false;
         this.fetchUserInfo(jwt);
+        this.fetchAllReservationInfo();
+        this.tomorrowDate.setDate(this.tomorrowDate.getDate() + 1);
       }
     });
 
@@ -153,7 +155,7 @@ export class HomePage implements OnInit, OnChanges {
         this.storageService.jwtChangedSub.subscribe((jwt) => {
           if (jwt) {
             this.userService
-              .deleteReservationById(reservationId, jwt)
+              .deleteReservationById(reservationId, jwt, date)
               .subscribe((val) => {
                 this.fetchAllReservationInfo();
                 this.presentToast('Reservation was successfully deleted!');
