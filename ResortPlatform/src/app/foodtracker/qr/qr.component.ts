@@ -21,8 +21,6 @@ export class QrComponent  implements OnInit, AfterViewInit {
   camerasFoundHandler(e: any[]) {
     if (this.devices.length == 0) {
       this.devices = e;
-      console.log("device list");
-      console.log( this.devices);
     }
     const backDevice = e.find(d => d.label.toLowerCase().includes("back"));
     if (backDevice) {
@@ -31,8 +29,12 @@ export class QrComponent  implements OnInit, AfterViewInit {
     }
   }
 
+  prin(e) {
+    console.log(e);
+  }
 
   scanSuccessHandler(e) {
+    console.log(e);
     this.onQrScanned.emit(e);
   }
   ngAfterViewInit(): void {

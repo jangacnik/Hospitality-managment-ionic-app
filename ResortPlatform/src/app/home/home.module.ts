@@ -6,9 +6,8 @@ import { HomePage } from './home.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { HomePageRoutingModule } from './home-routing.module';
-// import { LoginPageModule } from './login/login.module';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
-import { QrComponent } from '../foodtracker/qr/qr.component';
+import {ReversePipe} from "../pipes/reverse.pipe";
 
 @NgModule({
   imports: [
@@ -17,8 +16,8 @@ import { QrComponent } from '../foodtracker/qr/qr.component';
     FormsModule,
     ExploreContainerComponentModule,
     HomePageRoutingModule,
-    //LoginPageModule,
     NgxScannerQrcodeModule,
+    ReversePipe,
   ],
   declarations: [HomePage],
 })

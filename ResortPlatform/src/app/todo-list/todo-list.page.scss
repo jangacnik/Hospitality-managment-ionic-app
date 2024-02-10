@@ -4,6 +4,10 @@
   align-items: center;
 }
 
+
 .item-done {
   text-decoration: line-through;
+}
+ion-header ion-toolbar {
+  --background: url("../../assets/Untitled.svg") no-repeat center;
 }

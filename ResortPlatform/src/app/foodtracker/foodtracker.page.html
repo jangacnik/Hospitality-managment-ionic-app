@@ -1,7 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Food Tracker
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -19,14 +18,14 @@
     <ng-template>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Modal</ion-title>
+          <ion-title>QR Scanner</ion-title>
           <ion-buttons slot="end">
             <ion-button (click)="openDialog(false)">Close</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <app-qr [isRecording]="openModal" (onQrScanned)="scanWasSuccessful($event)"></app-qr>
+
       </ion-content>
     </ng-template>
   </ion-modal>

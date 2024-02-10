@@ -21,7 +21,7 @@
   font-size: 16px;
   line-height: 22px;
 
-  color: #8c8c8c;
+  //color: #8c8c8c;
 
   margin: 0;
 }
@@ -29,6 +29,26 @@
 #container a {
   text-decoration: none;
 }
+
+ion-card {
+  border-radius: 30px;
+  ion-card-content {
+    --background: #ece2e1;
+    ion-infinite-scroll {
+      --background: #ece2e1;
+      ion-list {
+        padding-top: 0;
+        background:  #ece2e1;
+        --background: #ece2e1;
+        ion-item {
+          --background: #ece2e1;
+        }
+      }
+    }
+  }
+
+}
+
 
 .center {
   display: flex;
@@ -40,7 +60,15 @@
 
 ion-grid {
   height: 100%;
-
+  ion-item {
+    box-shadow: none;
+    text-shadow: none;
+    border-radius: 30px;
+  }
+  ion-button {
+    border-radius: 30px;
+    font-size: 15px;
+  }
   ion-row {
     height: 33.33%;
     width: 100%;
@@ -65,5 +93,5 @@ ion-grid {
   height: 100%;
   display: flex;
   justify-content: center;
-  align-item: center;
+  align-items: center;
 }

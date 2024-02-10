@@ -1,101 +1,84 @@
 <ion-header [translucent]="true">
   <ion-toolbar style="text-align: center">
-    <img id="site-logo" style="height: 0.7rem; padding-inline: 20px" />
   </ion-toolbar>
 </ion-header>
-
-<ion-content [fullscreen]="true">
-  <!-- <app-login *ngIf="showLogin"></app-login> -->
-  <div *ngIf="!showLogin" style="height: 100%">
-    <ion-title style="padding-top: 20px">
-      Welcome {{usr?.firstName}}
+<ion-content [fullscreen]="true" style="overflow: hidden">
+  <div *ngIf="!showLogin" style="height: 100%; overflow: hidden">
+    <ion-title color="primary" style="padding-top: 1vh" class="ion-text-center">
+      Welcome to Food Tracker!
     </ion-title>
-    <!-- <ion-split-pane></ion-split-pane> -->
-
-    <!-- <br /> -->
+    <ion-title class="ion-text-center">{{ todaysDate | date: 'EEEE, dd.MM.yyyy' }}</ion-title>
     <ion-grid>
-      <ion-row style="height: 46%">
-        <ion-col>
-          <ion-item>
-            <ion-button class="center-button" (click)="openDialog(true)"
-              >Scan QR Code</ion-button
+      <ion-row style="height: 40vh">
+        <ion-col style="background-color: transparent">
+          <ion-title class="ion-text-left" style="padding-left: 3vh; padding-bottom: 0.5vh">New Meal?</ion-title>
+          <ion-item style="background-color: transparent">
+            <ion-button shape="default"  class="center-button" (click)="openDialog(true)"
+              >Click Here & Scan QR Code</ion-button
             >
           </ion-item>
+          <ion-title class="ion-text-left" style="padding-bottom: 0.5vh; padding-top: 0.5vh; padding-left: 3vh">Meals This Month:</ion-title>
+          <ion-card style="height: 25vh">
+            <ion-card-content style="overflow: auto">
+              <ion-infinite-scroll style="height: 22vh">
+                <ion-list
+                  slot="content"
+                  *ngIf="meals && meals.mealCount && meals.meals"
+                >
+                  <ion-item *ngFor="let item of (meals.meals | keyvalue) | reverse ">
+                    Meal {{item.key}} : {{item.value | date: "dd.MM.yyyy HH:mm"}}
+                  </ion-item>
+                </ion-list>
+              </ion-infinite-scroll>
 
-          <ion-accordion-group style="margin-top: 20px">
-            <ion-accordion
-              value="tracking"
-              style="max-height: 200px; overflow: auto"
-            >
-              <ion-item slot="header" color="light">
-                <ion-label
-                  >Meals this month:
-                  <ion-badge>{{usrWithTrack?.mealEntry?.mealCount}}</ion-badge>
-                </ion-label>
-              </ion-item>
-              <ion-list
-                class="ion-padding"
-                slot="content"
-                *ngIf="meals && meals.mealCount && meals.meals"
-              >
-                <ion-item *ngFor="let item of meals.meals | keyvalue">
-                  {{item.key}} : {{item.value | date: "dd.MM.yyyy HH:mm"}}
-                </ion-item>
-              </ion-list>
-            </ion-accordion>
-          </ion-accordion-group>
+            </ion-card-content>
+          </ion-card>
+
         </ion-col>
       </ion-row>
-      <ion-row style="height: 46%">
+      <ion-row style="height: 40vh">
         <ion-col>
+          <ion-title class="ion-text-left" style="padding-left: 3vh; padding-bottom: 0.5vh">Meal Reservation?</ion-title>
           <ion-item>
             <ion-button
               class="center-button"
+              text
               (click)="openReservationDialog(true)"
             >
-              Add reservation
+              Click Here & Make Meal Reservation
             </ion-button>
           </ion-item>
 
-          <ion-accordion-group style="margin-top: 20px">
-            <ion-accordion
-              value="tracking"
-              style="max-height: 200px; overflow: auto"
-            >
-              <ion-item slot="header" color="light" style="position: static">
-                <ion-label
-                  >Reservations this month:
-                  <ion-badge>{{reservations?.length}}</ion-badge>
-                </ion-label>
-              </ion-item>
-              <ion-list
-                class="ion-padding"
-                slot="content"
-                *ngIf="reservations && reservations.length > 0"
-              >
-                <ion-item *ngFor="let reservation of reservations | keyvalue">
-                  <span
-                    slot="start"
-                    style="position: absolute; top: 0.8rem; left: 0px"
-                    >{{reservation.key}}:</span
-                  >
-                  <ion-label style="margin-left: 1rem">
-                    <h2>
-                      Reservation Date: {{reservation.value.reservationDate}}
-                    </h2>
-                    <p>Meals: {{reservation.value.mealType}}</p>
-                  </ion-label>
-                  <ion-button
-                    *ngIf="canDelete(reservation.value.reservationDate)"
-                    slot="end"
-                    (click)="btnDeleteReservation(reservation.value.id, reservation.value.reservationDate)"
-                  >
-                    <ion-icon name="trash-outline" item-start></ion-icon>
-                  </ion-button>
-                </ion-item>
-              </ion-list>
-            </ion-accordion>
-          </ion-accordion-group>
+          <ion-title class="ion-text-left" style="padding-left: 3vh; padding-bottom: 0.5vh; padding-top: 0.5vh">My Meal Reservations</ion-title>
+
+          <ion-card style="height: 25vh">
+            <ion-card-content style="overflow: auto">
+              <ion-infinite-scroll style="height: 22vh">
+                <ion-list
+                  class="ion-padding"
+                  slot="content"
+                  *ngIf="reservations && reservations.length > 0"
+                >
+                  <ion-item *ngFor="let reservation of (reservations | keyvalue) | reverse">
+                    <ion-label style="margin-left: 1rem">
+                      <h2>
+                        Reservation Date: {{reservation.value.reservationDate}}
+                      </h2>
+                      <p>Meals: {{reservation.value.mealType}}</p>
+                    </ion-label>
+                    <ion-button
+                      *ngIf="canDelete(reservation.value.reservationDate)"
+                      slot="end"
+                      (click)="btnDeleteReservation(reservation.value.id, reservation.value.reservationDate)"
+                    >
+                      <ion-icon name="trash-outline" item-start></ion-icon>
+                    </ion-button>
+                  </ion-item>
+                </ion-list>
+              </ion-infinite-scroll>
+
+            </ion-card-content>
+          </ion-card>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -109,7 +92,7 @@
       <ng-template>
         <ion-header>
           <ion-toolbar>
-            <ion-title>Modal</ion-title>
+            <ion-title></ion-title>
             <ion-buttons slot="end">
               <ion-button (click)="openDialog(false)">Close</ion-button>
             </ion-buttons>

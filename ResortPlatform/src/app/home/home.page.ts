@@ -1,20 +1,17 @@
 import {
-  AfterContentInit,
-  AfterViewChecked,
   Component,
   OnChanges,
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
-import { Storage } from '@ionic/storage-angular';
 import { StorageService } from '../service/storage.service';
 import { UserService } from '../service/user.service';
 import { FoodTrackerUser } from '../model/FoodTrackerUser';
 import { FoodTrackerUserWithMealEntry } from '../model/FoodTrackerUserWithMealEntry';
 import { MealEntry } from '../model/MealEntry';
-import { debounceTime, delay, retry, retryWhen } from 'rxjs';
+import { retry } from 'rxjs';
 import { AlertController, ToastController } from '@ionic/angular';
+import {today} from "ionicons/icons";
 
 @Component({
   selector: 'app-home',
@@ -45,6 +42,8 @@ export class HomePage implements OnInit, OnChanges {
 
   showLogin = true;
 
+  todaysDate: Date;
+
   public alertButtons = [
     {
       text: 'Cancel',
@@ -63,6 +62,7 @@ export class HomePage implements OnInit, OnChanges {
     //     this.fetchUserInfo();
     //   }
     // });
+    this.todaysDate = new Date();
     this.storageService.jwtChangedSub.subscribe((jwt) => {
       if (jwt) {
         this.showLogin = false;
@@ -176,34 +176,6 @@ export class HomePage implements OnInit, OnChanges {
     }
   }
 
-  // TODO: Verjetno za deletnit (HTML tudi)
-  // public confirmMealButtons = [
-  //   {
-  //     text: 'Cancel',
-  //     role: 'cancel',
-  //     handler: () => {
-  //       console.log('Track canceled');
-  //     },
-  //   },
-  //   {
-  //     text: 'Track',
-  //     role: 'confirm',
-  //     handler: () => {
-  //       console.log('Alert confirmed');
-  //       // @ts-ignore
-  //       this.userService.trackMeal(this.usr.employeeNumber).subscribe(() => {
-  //         // @ts-ignore
-  //         this.userService
-  //           .getCurrentMonthTracking(this.usr.employeeNumber)
-  //           .subscribe((tr) => {
-  //             this.usrWithTrack = tr;
-  //             this.meals = this.usrWithTrack.mealEntry;
-  //           });
-  //       });
-  //     },
-  //   },
-  // ];
-
   ngOnChanges(changes: SimpleChanges): void {}
 
   openDialog(isOpen: boolean) {
@@ -231,4 +203,6 @@ export class HomePage implements OnInit, OnChanges {
         });
     });
   }
+
+  protected readonly Date = Date;
 }
