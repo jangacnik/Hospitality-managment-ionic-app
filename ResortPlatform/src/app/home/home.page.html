@@ -2,25 +2,29 @@
   <ion-toolbar style="text-align: center">
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true" style="overflow: hidden">
-  <div *ngIf="!showLogin" style="height: 100%; overflow: hidden">
-    <ion-title color="primary" style="padding-top: 1vh" class="ion-text-center">
-      Welcome to Food Tracker!
-    </ion-title>
+<ion-content [fullscreen]="true" style="height: 100vh;overflow: hidden">
+  <div *ngIf="!showLogin" style=" overflow: hidden">
+    <ion-row>
+      <ion-title color="primary" style="padding-top: 1vh" class="ion-text-center">
+        Welcome to Food Tracker!
+      </ion-title>
+    </ion-row>
+  <ion-row>
     <ion-title class="ion-text-center">{{ todaysDate | date: 'EEEE, dd.MM.yyyy' }}</ion-title>
-    <ion-grid>
-      <ion-row style="height: 40vh">
+  </ion-row>
+    <ion-grid style="overflow: hidden">
+      <ion-row>
         <ion-col style="background-color: transparent">
-          <ion-title class="ion-text-left" style="padding-left: 3vh; padding-bottom: 0.5vh">New Meal?</ion-title>
+          <ion-title class="ion-text-left  ion-padding" style="padding-left: 3vh; padding-bottom: 0.5vh">New Meal?</ion-title>
           <ion-item style="background-color: transparent">
             <ion-button shape="default"  class="center-button" (click)="openDialog(true)"
               >Click Here & Scan QR Code</ion-button
             >
           </ion-item>
-          <ion-title class="ion-text-left" style="padding-bottom: 0.5vh; padding-top: 0.5vh; padding-left: 3vh">Meals This Month:</ion-title>
-          <ion-card style="height: 25vh">
+          <ion-title class="ion-text-left  ion-padding">Meals This Month:</ion-title>
+          <ion-card>
             <ion-card-content style="overflow: auto">
-              <ion-infinite-scroll style="height: 22vh">
+              <ion-infinite-scroll style="height: 20vh">
                 <ion-list
                   slot="content"
                   *ngIf="meals && meals.mealCount && meals.meals"
@@ -33,10 +37,9 @@
 
             </ion-card-content>
           </ion-card>
-
         </ion-col>
       </ion-row>
-      <ion-row style="height: 40vh">
+      <ion-row>
         <ion-col>
           <ion-title class="ion-text-left" style="padding-left: 3vh; padding-bottom: 0.5vh">Meal Reservation?</ion-title>
           <ion-item>
@@ -51,9 +54,9 @@
 
           <ion-title class="ion-text-left" style="padding-left: 3vh; padding-bottom: 0.5vh; padding-top: 0.5vh">My Meal Reservations</ion-title>
 
-          <ion-card style="height: 25vh">
+          <ion-card>
             <ion-card-content style="overflow: auto">
-              <ion-infinite-scroll style="height: 22vh">
+              <ion-infinite-scroll style="height: 20vh">
                 <ion-list
                   class="ion-padding"
                   slot="content"
@@ -67,11 +70,14 @@
                       <p>Meals: {{reservation.value.mealType}}</p>
                     </ion-label>
                     <ion-button
+                      class="delete-res-btn"
+                      color="warn"
+                      style="border-style: hidden"
                       *ngIf="canDelete(reservation.value.reservationDate)"
                       slot="end"
                       (click)="btnDeleteReservation(reservation.value.id, reservation.value.reservationDate)"
                     >
-                      <ion-icon name="trash-outline" item-start></ion-icon>
+                      <ion-icon color="warn" name="trash-outline" item-start></ion-icon>
                     </ion-button>
                   </ion-item>
                 </ion-list>
@@ -83,10 +89,7 @@
       </ion-row>
     </ion-grid>
 
-    <!-- TODO: Implementirat -->
-    <!-- <ion-item>
-      <ion-button class="center-button">Meals</ion-button>
-    </ion-item> -->
+    <!-- MODALS -->
 
     <ion-modal [isOpen]="openModal" backdropDismiss="false">
       <ng-template>
@@ -111,7 +114,7 @@
       <ng-template>
         <ion-header>
           <ion-toolbar>
-            <ion-title>Add reservation</ion-title>
+            <ion-title></ion-title>
             <ion-buttons slot="end">
               <ion-button (click)="openReservationDialog(false)"
                 >Close</ion-button
@@ -120,25 +123,36 @@
           </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
-          <ion-list>
-            <ion-item>
-              <ion-label
-                >Add reservation for date: {{tomorrowDate | date:
-                "dd.MM.yyyy"}}</ion-label
-              >
-            </ion-item>
-            <ion-item *ngFor="let opt of reservationOptions">
-              <ion-checkbox
-                [(ngModel)]="opt.checked"
-                (ionChange)="changeEvent($event)"
+          <ion-row class="ion-justify-content-center">
+            <ion-title class="ion-text-center ion-padding">Meal Reservation</ion-title>
+          </ion-row>
+          <ion-row class="ion-justify-content-center" style="padding-bottom: 1vh">
+            <ion-label class="ion-text-center">{{resDate | date: "EEEE, dd.MM.yyyy"}}</ion-label>
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <ion-datetime [min]="minDate" [(ngModel)]="resDate" presentation="date" [firstDayOfWeek]="1" color="primary" class="ion-justify-content-center ion-align-self-center ion-text-center ion-align-items-center"></ion-datetime>
+          </ion-row>
+
+          <ion-row class="ion-padding-bottom ion-padding-top">
+            <ion-title
+            >Meal Type:</ion-title
+            >
+          </ion-row>
+            <ion-list lines="none" *ngFor="let opt of reservationOptions" class="reservation-type-list">
+              <ion-item >
+                <ion-checkbox
+                  justify="space-between"
+                  [(ngModel)]="opt.checked"
+                  (ionChange)="changeEvent($event)"
                 >{{opt.text}}</ion-checkbox
-              >
-            </ion-item>
-          </ion-list>
-          <ion-button
+                >
+              </ion-item>
+
+            </ion-list>
+          <ion-button shape="default" size="large" style="width: 100%"
             (click)="addReservationBtn()"
             [disabled]="!isReservationBtnActive"
-            >Confirm selection</ion-button
+            >SAVE</ion-button
           >
         </ion-content>
       </ng-template>

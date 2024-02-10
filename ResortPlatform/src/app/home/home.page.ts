@@ -31,8 +31,11 @@ export class HomePage implements OnInit, OnChanges {
   userLoggedIn: boolean = false;
   meals: MealEntry | undefined;
   reservations: any | undefined;
-  tomorrowDate: Date = new Date();
+  currentDate: Date = undefined;
+  tomorrowDate: Date = undefined;
+  resDate: string = undefined;
   tkString = '';
+  dateReady = false;
   constructor(
     private storageService: StorageService,
     public userService: UserService,
@@ -55,13 +58,9 @@ export class HomePage implements OnInit, OnChanges {
     },
   ];
 
+
+  minDate: string = undefined;
   ngOnInit(): void {
-    // this.storageService.get("jwt").then((value) => {
-    //   if (value) {
-    //     this.showLogin = false;
-    //     this.fetchUserInfo();
-    //   }
-    // });
     this.todaysDate = new Date();
     this.storageService.jwtChangedSub.subscribe((jwt) => {
       if (jwt) {
@@ -73,7 +72,10 @@ export class HomePage implements OnInit, OnChanges {
     });
 
     this.fetchAllReservationInfo();
-    this.tomorrowDate.setDate(this.tomorrowDate.getDate() + 1);
+
+    this.currentDate = new Date();
+    this.tomorrowDate = new Date();
+    this.tomorrowDate.setDate(this.currentDate.getDate() + 1);
   }
 
   fetchUserInfo(jwt?: string) {
@@ -119,19 +121,23 @@ export class HomePage implements OnInit, OnChanges {
         opt.checked = false;
       }
     }
-
-    let currentDate = new Date();
-    this.tomorrowDate.setDate(currentDate.getDate() + 1);
-
     const dataModel = {
       employeeNumber: this.usr.employeeNumber,
       mealType: mealType,
+      reservationDate: this.resDate
     };
     this.userService.addReservation(dataModel).subscribe((val) => {
       this.presentToast('Reservation was successfully added!');
       this.fetchAllReservationInfo();
+      this.dateReady = false;
     });
     //TODO: Error - "there was a problem adding the booking"
+  }
+
+  formatTimestamp(ts) {
+    let [D,M,Y,h,m,s,ap] = ts.toLowerCase().split(/\W/);
+    h = String(h%12 + (ap == 'am'? 0 : 12)).padStart(2, '0');
+    return `${Y}-${M}-${D}T${h}:${m}:${s}Z`;
   }
 
   canDelete(date) {
@@ -183,6 +189,12 @@ export class HomePage implements OnInit, OnChanges {
   }
 
   openReservationDialog(isOpen: boolean) {
+    this.currentDate = new Date();
+    this.tomorrowDate = new Date();
+    this.tomorrowDate.setDate(this.currentDate.getDate() + 1);
+    this.resDate = new Date(this.tomorrowDate).toISOString();
+    this.minDate = this.resDate;
+    this.dateReady = true;
     this.openReservationModal = isOpen;
   }
 
@@ -203,6 +215,4 @@ export class HomePage implements OnInit, OnChanges {
         });
     });
   }
-
-  protected readonly Date = Date;
 }

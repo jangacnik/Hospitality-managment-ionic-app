@@ -76,15 +76,32 @@
   --ion-color-light-tint: #f5f6f9;
 
 
+  //--ion-toolbar-background: #ebe3d9;
+
   --ion-background-color: #e2d8ca;
   --ion-item-background: #e2d8ca;
-
-  --ion-tab-bar-background: #f6f1eb;
-
-  --ion-card-background: #ccaf8a;
+  --ion-accordion-group-background: #ebe3d9;
+  --ion-tab-bar-background: #ebe3d9;
+  --ion-card-background: #ece2e1;
 
   --ion-logo-url: url("/assets/Untitled.svg") no-repeat center;
   --ion-toolbar-background: url("/assets/Untitled.svg") no-repeat center;
+
+  ion-button {
+    --border-radius: 15px;
+    --box-shadow: none;
+    --color: black;
+    --background: #bba485;
+    --border-style: solid;
+    --border-color: #a28e71;
+  }
+  ion-datetime {
+    --background: #fff1f2;
+    --background-rgb: 255, 241, 242;
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: rgba(var(--ion-color-rose-rgb), 0.3) 0px 10px 15px -3px;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -185,11 +202,13 @@
       --border-style: solid;
       --border-color: #a28e71;
     }
+    ion-datetime {
+      --background: #fff1f2;
+      --background-rgb: 255, 241, 242;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: rgba(var(--ion-color-rose-rgb), 0.3) 0px 10px 15px -3px;
+    }
   }
-
-  /*
-   * iOS Dark Theme
-   * -------------------------------------------
-   */
 
 }

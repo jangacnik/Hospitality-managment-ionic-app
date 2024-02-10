@@ -65,10 +65,12 @@ ion-grid {
     text-shadow: none;
     border-radius: 30px;
   }
+
   ion-button {
     border-radius: 30px;
     font-size: 15px;
   }
+
   ion-row {
     height: 33.33%;
     width: 100%;
@@ -94,4 +96,32 @@ ion-grid {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.delete-res-btn {
+  --border-style: none;
+  --border-color: 0;
+  color: #eb445a;
+}
+.reservation-type-list {
+  --background: #ece2e1;
+  ion-item {
+    width: 100%;
+    border: 0.5vh solid #ccaf8a;
+    border-radius: 30px;
+    --background: #ece2e1;
+
+    ion-checkbox {
+      width: 100%;
+      --size: 28px;
+      --background-checked: #af8550;
+      --checkbox-background: #ece2e1;
+    }
+
+    ion-checkbox::part(container) {
+      border-radius: 6px;
+      border-color: #af8550;
+      --background-checked: #af8550;
+    }
+
+  }
 }
