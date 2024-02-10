@@ -88,6 +88,9 @@ ion-grid {
     }
   }
 }
+ion-item {
+  min-height: 4vh;
+}
 
 .center-button {
   position: relative;
@@ -107,7 +110,7 @@ ion-grid {
   ion-item {
     width: 100%;
     border: 0.5vh solid #ccaf8a;
-    border-radius: 30px;
+    border-radius: 20px;
     --background: #ece2e1;
 
     ion-checkbox {
