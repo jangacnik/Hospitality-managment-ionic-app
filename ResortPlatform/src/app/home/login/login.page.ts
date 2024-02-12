@@ -29,7 +29,6 @@ export class LoginPage implements OnInit {
   ngOnInit() {}
 
   login() {
-    // this._router.navigate(['home']);
     this._authService
       .signin(
         this.loginForm.get('email')?.value,

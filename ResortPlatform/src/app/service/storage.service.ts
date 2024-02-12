@@ -33,7 +33,6 @@ export class StorageService {
 
   public clearStorage() {
     this.storage.clear().then((r) => {
-      this.storage.create().then();
     });
   }
 }

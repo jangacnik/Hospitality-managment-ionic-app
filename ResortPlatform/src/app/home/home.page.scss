@@ -31,17 +31,17 @@
 }
 
 ion-card {
-  border-radius: 30px;
+  border-radius: 15px;
   ion-card-content {
     --background: #ece2e1;
     ion-infinite-scroll {
       --background: #ece2e1;
       ion-list {
         padding-top: 0;
-        background:  #ece2e1;
-        --background: #ece2e1;
+        background:  #fdfdfd;
+        --background: #fdfdfd;
         ion-item {
-          --background: #ece2e1;
+          --background: #fdfdfd;
         }
       }
     }
@@ -60,16 +60,6 @@ ion-card {
 
 ion-grid {
   height: 100%;
-  ion-item {
-    box-shadow: none;
-    text-shadow: none;
-    border-radius: 30px;
-  }
-
-  ion-button {
-    border-radius: 30px;
-    font-size: 15px;
-  }
 
   ion-row {
     height: 33.33%;
@@ -105,26 +95,69 @@ ion-item {
   --border-color: 0;
   color: #eb445a;
 }
+
+ion-row.datepicker {
+  ion-datetime {
+    --background: #fdfdfd;
+    box-shadow: 4px 4px 4px 4px #ccaf8a;
+  }
+}
 .reservation-type-list {
   --background: #ece2e1;
   ion-item {
-    width: 100%;
-    border: 0.5vh solid #ccaf8a;
+    font-family: worksans;
+    font-size: 0.55em;
+    //width: 100%;
+    border: 0.18vh solid #ccaf8a;
     border-radius: 20px;
     --background: #ece2e1;
 
     ion-checkbox {
       width: 100%;
-      --size: 28px;
+      --size: 36px;
       --background-checked: #af8550;
       --checkbox-background: #ece2e1;
     }
 
     ion-checkbox::part(container) {
-      border-radius: 6px;
+      border-radius: 30px;
       border-color: #af8550;
       --background-checked: #af8550;
     }
 
   }
+}
+ion-list {
+  font-size: 3em;
+  div.item-native {
+    padding-left: 0;
+  }
+  ion-item {
+    font-size:  0.42em;
+    --ion-font-family: 'worksans-500';
+
+    ion-label {
+      margin-left: 0 !important;
+      font-size: 0.7em;
+      --ion-font-family: 'worksans-500';
+    }
+    h2 {
+      margin-left: 0 !important;
+      --ion-font-family: 'worksans-500';
+    }
+    p {
+      margin-left: 0 !important;
+      --ion-font-family: 'worksans-500';
+    }
+  }
+}
+.works {
+  --color: #414141;
+  color:  #414141;
+  --ion-font-family: 'worksans';
+}
+.works-semibold {
+  --color: #414141;
+  color:  #414141;
+  --ion-font-family: 'worksans-semibold';
 }

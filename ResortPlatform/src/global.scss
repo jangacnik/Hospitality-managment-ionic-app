@@ -34,3 +34,16 @@ flex-center {
 
 ion-content {
 }
+// ios bottom iphone x fixed
+body {
+  margin-top: constant(safe-area-inset-top);
+  margin-top: env(safe-area-inset-top);
+}
+
+ion-tab-bar {
+  margin-bottom: calc(7px + env(safe-area-inset-top));
+}
+
+html {
+  --ion-dynamic-font: var(--ion-default-dynamic-font);
+}

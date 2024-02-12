@@ -1,9 +1,77 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
+@font-face {
+  font-family: 'worksans';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../assets/fonts/WorkSans-VariableFont_wght.ttf');
+}
 
+
+@font-face {
+  font-family: 'worksans-500';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../assets/fonts/WorkSans-VariableFont_wght.ttf');
+}
+
+@font-face {
+  font-family: 'worksans-bold';
+  font-style: normal;
+  font-weight: bold;
+  src: url('../assets/fonts/WorkSans-VariableFont_wght.ttf');
+}
+@font-face {
+  font-family: 'worksans-semibold';
+  font-style: normal;
+  src: url('../assets/fonts/WorkSans-SemiBold.ttf');
+}
+
+@font-face {
+  font-family: 'baskerville';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../assets/fonts/baskerville.ttf');
+}
+
+
+.ios{
+  --ion-safe-area-top : -1 !important;
+  --ion-safe-area-bottom: 14px;
+  .transparent-ios {
+    --background: transparent;
+  }
+}
 /** Ionic CSS Variables **/
 :root {
+  --ion-font-family: 'worksans';
+  --ion-safe-area-bottom: 14px;
+  ion-title, ion-text {
+    --ion-font-family: 'worksans';
+  }
+
+  ion-header {
+    --box-shadow: none;
+    box-shadow: none;
+    //font-size: 30vh;
+    border: none;
+    --border-color: #f7f5f3;
+    --background: #f7f5f3;
+    ion-button {
+      --background: transparent;
+      object-fit: cover;
+
+    }
+  }
+  .ios {
+    ion-toolbar {
+      --ion-font-family: 'baskerville' !important;
+      //margin-top: calc(env(safe-area-inset-top) - 10px);
+      //margin-bottom: calc(7px + env(safe-area-inset-top));
+    }
+  }
   /** primary **/
+  --ion-font-family: 'worksans';
   --ion-color-primary: #af8550;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
@@ -89,11 +157,7 @@
 
   ion-button {
     --border-radius: 15px;
-    --box-shadow: none;
     --color: black;
-    --background: #bba485;
-    --border-style: solid;
-    --border-color: #a28e71;
   }
   ion-datetime {
     --background: #fff1f2;
@@ -194,11 +258,11 @@
 
     //--ion-toolbar-background: #ebe3d9;
 
-    --ion-background-color: #e2d8ca;
-    --ion-item-background: #e2d8ca;
+    --ion-background-color: #f7f5f3;
+    --ion-item-background: #f7f5f3;
     --ion-accordion-group-background: #ebe3d9;
-    --ion-tab-bar-background: #ebe3d9;
-    --ion-card-background: #ece2e1;
+    --ion-tab-bar-background: #fbfaf8;
+    --ion-card-background: #fdfdfd;
 
     --ion-logo-url: url("/assets/Untitled.svg") no-repeat center;
     --ion-toolbar-background: url("/assets/Untitled.svg") no-repeat center;
@@ -206,10 +270,11 @@
     ion-button {
       --border-radius: 15px;
       --box-shadow: none;
-      --color: black;
-      --background: #bba485;
-      --border-style: solid;
-      --border-color: #a28e71;
+      //--color: black;
+      //--background: #bba485;
+      //--border-style: solid;
+      //--border-color: #a28e71;
+      //--background: linear-gradient(#c7a062, #bd9353);
     }
     ion-datetime {
       --background: #fff1f2;
@@ -222,20 +287,46 @@
       min-height: 4vh;
     }
 
-    .ios {
-      ion-header {
-        padding-top: env(safe-area-inset-left);
-      }
-    }
   }
-  .ios {
-    ion-header {
-      padding-top: env(safe-area-inset-left);
-    }
-  }
+
 }
-.ios {
-  ion-header {
-    padding-top: env(safe-area-inset-left);
+
+
+.gradient-btn {
+  ion-item {
+    box-shadow: none;
+    text-shadow: none;
+    border-radius: 15px;
+  }
+  ion-button {
+    border-radius: 15px;
+    font-size: 15px;
+    //--background: linear-gradient(270deg, #c7a062 0%, #be9350 100%) !important;
+  }
+  --ion-font-family: 'worksans-semibold';
+  border-radius: 15px;
+  font-size: 1.2em;
+  box-shadow: 0.3vh 0.3vh 0.3vh #666;
+  --margin-bottom: 1vh;
+  --color: linear-gradient(90deg,rgba(225,205,175,0.6) 0%, rgba(199,160,89,0.45) 33%, rgba(190,147,80,0.4) 100%) !important;
+  --background: linear-gradient(90deg,rgba(225,205,175,0.6) 0%, rgba(199,160,89,0.45) 33%, rgba(190,147,80,0.4) 100%) !important;
+  background-image: linear-gradient(90deg,rgba(225,205,175,0.6) 0%, rgba(199,160,89,0.45) 33%, rgba(190,147,80,0.4) 100%) !important;
+
+}
+ion-grid {
+  ion-item {
+    box-shadow: none;
+    text-shadow: none;
+    border-radius: 15px;
+  }
+  ion-button.gradient-btn {
+    --ion-font-family: 'worksans-semibold';
+    border-radius: 15px;
+    font-size: 1.2em;
+    box-shadow: 0.3vh 0.3vh 0.3vh #666;
+    --margin-bottom: 1vh;
+    --color: linear-gradient(90deg,rgba(225,205,175,0.6) 0%, rgba(199,160,89,0.3) 33%, rgba(190,147,80,0.3) 100%) !important;
+    --background: linear-gradient(90deg,rgba(225,205,175,0.6) 0%, rgba(199,160,89,0.3) 33%, rgba(190,147,80,0.3) 100%) !important;
+    background-image: linear-gradient(90deg,rgba(225,205,175,0.6) 0%, rgba(199,160,89,0.3) 33%, rgba(190,147,80,0.3) 100%) !important;
   }
 }

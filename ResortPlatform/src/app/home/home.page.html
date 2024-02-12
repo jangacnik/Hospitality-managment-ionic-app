@@ -1,44 +1,63 @@
-<ion-header [translucent]="true">
-  <ion-toolbar style="text-align: center">
-  </ion-toolbar>
-</ion-header>
 <ion-content [fullscreen]="true" style="height: 100vh;overflow: hidden">
-  <div *ngIf="!showLogin" style=" overflow: hidden">
-    <ion-grid style="overflow: hidden">
-      <ion-row class="ion-no-padding">
-        <ion-col size="12" class="ion-no-padding ion-no-margin">
-          <ion-item class="ion-no-padding ion-no-margin" lines="none" style="min-height: 4vh">
-            <ion-title color="primary" class="ion-text-center ion-no-padding ion-no-margin">Welcome to Food
-              Tracker!<br> <ion-label style="color: black; font-size: large">{{ todaysDate | date: 'EEEE, dd.MM.yyyy' }}</ion-label>
-            </ion-title>
-          </ion-item>
+  <div style=" overflow: hidden">
+    <ion-grid *ngIf="!showLogin" style="overflow: hidden">
+      <ion-row class="ion-no-margin ion-no-padding">
+        <ion-col size="12" class="ion-no-margin ion-no-padding">
+            <ion-text  color="primary"  class="ion-no-margin ion-no-padding"
+                      ><h2 style="font-weight: bold; font-family: 'baskerville';width: 100%; ">Welcome to Food Tracker!</h2>
+              <h3 class="ion-no-margin ion-no-padding" style="color:#414141; font-size: 1rem; font-weight: normal; font-family: 'worksans';">{{ todaysDate | date: 'EEEE, dd.MM.yyyy' }}
+              </h3>
+            </ion-text>
         </ion-col>
       </ion-row>
-      <ion-row  class="ion-no-padding ion-no-margin">
-        <ion-col class="ion-no-padding ion-no-margin"  size="12" >
-          <ion-item class="ion-no-padding"  lines="none">
-            <ion-label style="padding-left: 3vh" class="ion-text-left ion-padding ion-no-margin">
-              New Meal?
-            </ion-label>
-          </ion-item>
-          <ion-item style="background-color: transparent"  lines="none">
-            <ion-button shape="default" class="center-button" (click)="openDialog(true)"
-            >Click Here & Scan QR Code
-            </ion-button
-            >
-          </ion-item>
-          <ion-item  lines="none">
-            <ion-title class="ion-text-left  ion-padding">Meals This Month:</ion-title>
-          </ion-item>
-          <ion-card>
+
+      <ion-row class="ion-no-padding ion-no-margin">
+        <ion-col class="ion-no-padding ion-no-margin">
+            <ion-text>
+              <h2 style="padding-left: 3vh; padding-bottom: 0; font-weight: bold;  margin-top: 1vh"
+              class="ion-text-left ion-no-margin ion-no-padding works-semibold">
+                New Meal?
+              </h2>
+            </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-no-padding ">
+        <ion-col class="ion-no-padding ion-no-margin ion-justify-content-center" size="11">
+          <ion-button
+            size="large"
+            shape="default"
+            class="center-button gradient-btn works-semibold"
+            (click)="openDialog(true)"
+          >Scan QR Code
+          </ion-button
+          >
+        </ion-col>
+      </ion-row>
+      <ion-row  class="ion-no-padding ion-margin" style="margin-bottom: 0.75vh; margin-top: 0.75vh">
+        <ion-col class="ion-no-padding ion-no-margin">
+            <ion-text>
+              <h4  style="padding-left: 1.8vh; padding-bottom: 0"
+                   class="ion-text-left ion-no-margin ion-no-padding works">
+
+                Meals This Month:
+              </h4>
+            </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-no-padding ion-no-margin">
+        <ion-col class="ion-no-padding ion-no-margin">
+          <ion-card class="ion-margin" style="margin-top: 0">
             <ion-card-content style="overflow: auto">
-              <ion-infinite-scroll style="height: 20vh">
+              <ion-infinite-scroll style="height: 24vh">
                 <ion-list
                   slot="content"
                   *ngIf="meals && meals.mealCount && meals.meals"
                 >
-                  <ion-item  *ngFor="let item of (meals.meals | keyvalue) | reverse ">
-                    Meal {{item.key}} : {{item.value | date: "dd.MM.yyyy HH:mm"}}
+                  <ion-item *ngFor="let item of (meals.meals | keyvalue) | reverse ">
+                    <ion-text>
+                      <h4>
+                        Meal {{item.key}} : {{item.value | date: "dd.MM.yyyy HH:mm"}}</h4>
+                    </ion-text>
                   </ion-item>
                 </ion-list>
               </ion-infinite-scroll>
@@ -47,42 +66,55 @@
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-item  lines="none">
-            <ion-title class="ion-text-left" style="padding-left: 3vh; padding-bottom: 0.5vh">Meal Reservation?
-            </ion-title>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-button
-              class="center-button"
-              text
-              (click)="openReservationDialog(true)"
-            >
-              Click Here & Make Meal Reservation
-            </ion-button>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-label class="ion-text-left" style="padding-left: 3vh; padding-bottom: 0.5vh; padding-top: 0.5vh">My
-              Meal Reservations
-            </ion-label>
-          </ion-item>
+      <ion-row class="ion-no-padding ion-no-margin">
+        <ion-col class="ion-no-padding ion-no-margin">
+          <ion-text >
+            <h2 style="padding-left: 1.9vh; padding-bottom: 0; font-weight: bold"
+                       class="ion-text-left ion-no-margin ion-no-padding works-semibold">Meal Reservation?
+            </h2>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-no-margin ion-no-padding">
+        <ion-col class="ion-no-padding ion-no-margin ion-justify-content-center" size="11">
+          <ion-button
+            size="large"
+            shape="default"
+            class="center-button gradient-btn works-semibold"
+            (click)="openReservationDialog(true)"
+          >
+            Make Meal Reservation
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row  class="ion-no-padding ion-margin" style="margin-bottom: 0.75vh; margin-top: 0.75vh">
+        <ion-col class="ion-no-padding ion-no-margin">
+          <ion-text>
+            <h4  style="padding-left: 1.8vh; padding-bottom: 0"
+                 class="ion-text-left ion-no-margin ion-no-padding works">
 
-          <ion-card>
+              My Meal Reservations
+            </h4>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-no-padding ion-no-margin">
+        <ion-col class="ion-no-padding ion-no-margin">
+          <ion-card class="ion-margin" style="margin-top: 0">
             <ion-card-content style="overflow: auto">
-              <ion-infinite-scroll style="height: 20vh">
+              <ion-infinite-scroll style="height: 24vh">
                 <ion-list
-                  class="ion-padding"
                   slot="content"
                   *ngIf="reservations && reservations.length > 0"
                 >
                   <ion-item *ngFor="let reservation of (reservations | keyvalue) | reverse">
-                    <ion-label style="margin-left: 1rem">
-                      <h2>
-                        Reservation Date: {{reservation.value.reservationDate}}
-                      </h2>
+                    <ion-text>
+                      <h3>
+                        Reservation for {{reservation.value.reservationDate | date: "dd.MM.yyyy"}}
+                      </h3>
                       <p>Meals: {{reservation.value.mealType}}</p>
-                    </ion-label>
+                    </ion-text>
                     <ion-button
                       class="delete-res-btn"
                       color="warn"
@@ -130,8 +162,8 @@
           <ion-toolbar>
             <ion-title></ion-title>
             <ion-buttons slot="end">
-              <ion-button (click)="openReservationDialog(false)"
-              >Close
+              <ion-button class="transparent-ios" (click)="openReservationDialog(false)"
+              ><ion-icon style="font-size: 3em" name="close-outline"></ion-icon>
               </ion-button
               >
             </ion-buttons>
@@ -140,46 +172,51 @@
         <ion-content class="ion-padding">
           <ion-row class="ion-justify-content-center">
             <ion-col size="12">
-              <ion-item  lines="none">
-                <ion-title class="ion-text-center ion-padding">Meal Reservation</ion-title>
+              <ion-item lines="none">
+                <ion-title  style="font-size: 2em; margin-left: 0; padding-left: 0; padding-right: 0" class="ion-text-center">Meal Reservation</ion-title>
               </ion-item>
             </ion-col>
           </ion-row>
-          <ion-row class="ion-justify-content-center" style="padding-bottom: 1vh">
+          <ion-row class="ion-justify-content-center ion-no-padding ion-no-margin" style="padding-bottom: 1vh">
             <ion-col size="12">
-              <ion-item  lines="none">
-                <ion-label class="ion-text-center">{{resDate | date: "EEEE, dd.MM.yyyy"}}</ion-label>
+              <ion-item lines="none">
+                <ion-title class="ion-text-center">{{resDate | date: "EEEE, dd.MM.yyyy"}}</ion-title>
               </ion-item>
             </ion-col>
           </ion-row>
-          <ion-row class="ion-justify-content-center">
+          <ion-row class="ion-justify-content-center datepicker">
             <ion-datetime [min]="minDate" [(ngModel)]="resDate" presentation="date" [firstDayOfWeek]="1" color="primary"
                           class="ion-justify-content-center ion-align-self-center ion-text-center ion-align-items-center"></ion-datetime>
           </ion-row>
 
-          <ion-row class="ion-padding-bottom ion-padding-top">
-            <ion-col size="12">
-              <ion-item  lines="none">
-                <ion-title
+          <ion-row class="ion-margin ion-no-padding" style="margin-left: 0; padding-left: 0; margin-bottom: 0">
+            <ion-col size="12" class="ion-no-padding">
+              <ion-item lines="none">
+                <ion-title style="font-size: 2em;margin-left: 0; padding-left: 0"
                 >Meal Type:
                 </ion-title
                 >
               </ion-item>
             </ion-col>
           </ion-row>
-          <ion-list lines="none" class="reservation-type-list">
-            <ion-item style="margin-bottom: 1.5vh" *ngFor="let opt of reservationOptions"
-                      >
-              <ion-checkbox
-                justify="space-between"
-                [(ngModel)]="opt.checked"
-                (ionChange)="changeEvent($event)"
-              >{{opt.text}}</ion-checkbox
-              >
-            </ion-item>
+          <ion-row class="ion-no-margin ion-no-padding">
+            <ion-col size="12">
+              <ion-list lines="none" class="reservation-type-list">
+                <ion-item style="margin-bottom: 1.5vh" *ngFor="let opt of reservationOptions"
+                >
+                  <ion-checkbox
+                    justify="space-between"
+                    [(ngModel)]="opt.checked"
+                    (ionChange)="changeEvent($event)"
+                  >{{opt.text}}</ion-checkbox
+                  >
+                </ion-item>
+              </ion-list>
+            </ion-col>
+            <ion-col></ion-col>
+          </ion-row>
 
-          </ion-list>
-          <ion-button shape="default" size="large" style="width: 100%"
+          <ion-button class="gradient-btn" shape="default" size="large" style="width: 100%"
                       (click)="addReservationBtn()"
                       [disabled]="!isReservationBtnActive"
           >SAVE

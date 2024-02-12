@@ -1,1 +1,21 @@
+ion-label {
+  font-size: medium;
+}
+.md {
+  margin-bottom: 0;
+  margin-top: 0;
+  padding-top: 0;
+  padding-right: 0;
 
+}
+.md ion-icon {
+    zoom: 1.35;
+}
+.ios {
+  ion-icon {
+    zoom: 1;
+  }
+  ion-label {
+    font-size: smaller;
+  }
+}
