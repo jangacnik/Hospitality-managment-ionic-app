@@ -25,6 +25,75 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
+
+.ios{
+  --ion-safe-area-top : -1 !important;
+  --ion-safe-area-bottom: 14px;
+  .transparent-ios {
+    --background: transparent;
+  }
+}
+ion-button {
+  --border-radius: 15px;
+  --color: black;
+}
+ion-datetime {
+  --background: #fff1f2;
+  --background-rgb: 255, 241, 242;
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: rgba(var(--ion-color-rose-rgb), 0.3) 0px 10px 15px -3px;
+}
+
+
+.gradient-btn {
+  ion-item {
+    box-shadow: none;
+    text-shadow: none;
+    border-radius: 15px;
+  }
+  ion-button {
+    border-radius: 15px;
+    font-size: 15px;
+    //--background: linear-gradient(270deg, #c7a062 0%, #be9350 100%) !important;
+  }
+  --ion-font-family: 'worksans-semibold';
+  border-radius: 15px;
+  font-size: 1.2em;
+  box-shadow: 0.3vh 0.3vh 0.3vh #666;
+  --margin-bottom: 1vh;
+  --color: linear-gradient(90deg,rgba(225,205,175,0.6) 0%, rgba(199,160,89,0.45) 33%, rgba(190,147,80,0.4) 100%) !important;
+  --background: linear-gradient(90deg,rgba(225,205,175,0.6) 0%, rgba(199,160,89,0.45) 33%, rgba(190,147,80,0.4) 100%) !important;
+  background-image: linear-gradient(90deg,rgba(225,205,175,0.6) 0%, rgba(199,160,89,0.45) 33%, rgba(190,147,80,0.4) 100%) !important;
+
+}
+ion-grid {
+  ion-item.gradient-btn {
+    box-shadow: none;
+    text-shadow: none;
+    border-radius: 15px;
+  }
+  ion-button.gradient-btn {
+    --ion-font-family: 'worksans-semibold';
+    border-radius: 15px;
+    font-size: 1.2em;
+    box-shadow: 0.3vh 0.3vh 0.3vh #666;
+    --margin-bottom: 1vh;
+    --color: linear-gradient(90deg,rgba(225,205,175,0.6) 0%, rgba(199,160,89,0.3) 33%, rgba(190,147,80,0.3) 100%) !important;
+    --background: linear-gradient(90deg,rgba(225,205,175,0.6) 0%, rgba(199,160,89,0.3) 33%, rgba(190,147,80,0.3) 100%) !important;
+    background-image: linear-gradient(90deg,rgba(225,205,175,0.6) 0%, rgba(199,160,89,0.3) 33%, rgba(190,147,80,0.3) 100%) !important;
+  }
+}
+
+ion-item {
+  min-height: 4vh;
+}
+.ios {
+  ion-header {
+    padding-top: env(safe-area-inset-left);
+  }
+}
+
 flex-center {
   display: flex;
   justify-content: center;
@@ -46,4 +115,32 @@ ion-tab-bar {
 
 html {
   --ion-dynamic-font: var(--ion-default-dynamic-font);
+
+  --ion-font-family: 'worksans';
+  --ion-safe-area-bottom: 14px;
+  ion-title, ion-text {
+    --ion-font-family: 'worksans';
+  }
+}
+
+
+ion-header {
+  --box-shadow: none;
+  box-shadow: none;
+  //font-size: 30vh;
+  border: none;
+  --border-color: #f7f5f3;
+  --background: #f7f5f3;
+  ion-button {
+    --background: transparent;
+    object-fit: cover;
+
+  }
+}
+.ios {
+  ion-toolbar {
+    --ion-font-family: 'baskerville' !important;
+    //margin-top: calc(env(safe-area-inset-top) - 10px);
+    //margin-bottom: calc(7px + env(safe-area-inset-top));
+  }
 }

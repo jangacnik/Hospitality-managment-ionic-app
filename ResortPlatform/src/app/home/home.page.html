@@ -118,7 +118,7 @@
                     <ion-button
                       class="delete-res-btn"
                       color="warn"
-                      style="border-style: hidden"
+                      style="border-style: hidden; box-shadow: none; background: transparent"
                       *ngIf="canDelete(reservation.value.reservationDate)"
                       slot="end"
                       (click)="btnDeleteReservation(reservation.value.id, reservation.value.reservationDate)"

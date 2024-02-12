@@ -93,9 +93,9 @@ ion-item {
 .delete-res-btn {
   --border-style: none;
   --border-color: 0;
+  --box-shadow: none;
   color: #eb445a;
 }
-
 ion-row.datepicker {
   ion-datetime {
     --background: #fdfdfd;
