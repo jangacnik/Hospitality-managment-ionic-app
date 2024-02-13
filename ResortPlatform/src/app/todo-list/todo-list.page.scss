@@ -18,3 +18,16 @@ ion-header ion-toolbar {
   --background: #efd7b2;
   --border-radius: 10px;
 }
+
+.example-modal {
+  align-items: center;
+  justify-content: center;
+  &::part(content){
+    width: 80%;
+    height: 50%;
+  }
+}
+
+.segment-invisible {
+  visibility: hidden;
+}

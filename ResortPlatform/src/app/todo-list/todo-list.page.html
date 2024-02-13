@@ -11,7 +11,7 @@
 </ion-menu>
 <div class="ion-page" id="main-content">
 <ion-content [fullscreen]="true">
-  <ion-grid *ngIf="dataReady">
+  <ion-grid >
   <ion-row style="width: 100%" class="ion-justify-content-center ion-align-items-center">
     <ion-col size-xs="2"  size-sm="2" size="1">
       <ion-menu-toggle>
@@ -45,18 +45,56 @@
         </ion-text>
       </ion-col>
   </ion-row>
-  <ion-row>
+
+  <ion-row *ngIf="myTaskLists">
     <ion-col>
-      <ion-segment color="primary" value="default" style="width: 100%">
-        <ion-segment-button value="default">
+      <ion-segment  [(ngModel)]="selectedList" color="primary" value="today" style="width: 100%">
+        <ion-segment-button value="today">
           <ion-label>Today's Tasks</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="segment">
+        <ion-segment-button value="mine">
           <ion-label>My Tasks</ion-label>
         </ion-segment-button>
       </ion-segment>
     </ion-col>
-  </ion-row></ion-grid>
+  </ion-row>
+    <ion-row *ngIf="taskLoading" class="ion-justify-content-center ion-align-items-center">
+      <div class="ion-justify-content-center">
+        <ion-item lines="none">
+          <ion-spinner color="primary" style="width: 5rem; height: 5rem"></ion-spinner>
+        </ion-item>
+      </div>
+    </ion-row>
+  <ion-row  *ngIf="!taskLoading">
+    <ion-col>
+      <ion-accordion-group   *ngIf="selectedList === 'today'" [multiple]="true">
+        <ion-accordion *ngFor="let tasks of taskListsAll; let i = index" >
+          <ion-item slot="header" lines="none" class="gradient-accordion ion-text-wrap ion-wrap">
+            <ion-label class="ion-text-wrap ion-wrap">{{tasks.title}}</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <ion-item *ngFor="let tk of taskLists[i].tasks">
+              <ion-label>{{tk.title}}</ion-label>
+            </ion-item>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+
+      <ion-accordion-group  *ngIf="selectedList === 'mine'" [multiple]="true">
+        <ion-accordion *ngFor="let tasks of myTaskLists; let i = index" >
+          <ion-item slot="header" lines="none" class="gradient-accordion ion-text-wrap">
+            <ion-label  class="ion-text-wrap">{{tasks.title}}</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <ion-item *ngFor="let tk of tasks.tasks">
+              <ion-label>{{tk.title}}</ion-label>
+            </ion-item>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+    </ion-col>
+  </ion-row>
+  </ion-grid>
 <!--  <div class="flexContainer">-->
 <!--    <ion-button (click)="changeDate(-1)">-->
 <!--      <ion-icon name="chevron-back-outline"></ion-icon>-->
@@ -100,17 +138,21 @@
     <ion-icon name="arrow-up"></ion-icon>
   </ion-button> -->
   <ion-datetime-button datetime="datetime" id="fake-click"></ion-datetime-button>
-  <ion-modal [keepContentsMounted]="true" [isOpen]="showCalendar" (didDismiss)="cancelCalendar()">
-    <ng-template>
-      <ion-datetime
-        [(ngModel)]="selectedDate"
-        [max]="maxDate"
-        id="datetime"
-        presentation="day"
-        [showDefaultButtons]="true"
-        doneText="Confirm"
-        cancelText="Cancel"
-      ></ion-datetime>
+  <ion-modal class="example-modal" style="height: 100%" [keepContentsMounted]="true" [isOpen]="showCalendar" (didDismiss)="cancelCalendar()">
+    <ng-template style="height: 100%">
+        <ion-datetime style="height: 100%"
+          [(ngModel)]="selectedDate"
+          [max]="maxDate"
+          id="datetime" [firstDayOfWeek]="1"
+          presentation="date"
+          [showDefaultButtons]="true"
+          doneText="Confirm"
+                      color="primary"
+          cancelText="Cancel"
+                      (ionChange)="updateTaskLists()"
+                      #datetime
+        ></ion-datetime>
+
     </ng-template>
   </ion-modal>
 </ion-content>

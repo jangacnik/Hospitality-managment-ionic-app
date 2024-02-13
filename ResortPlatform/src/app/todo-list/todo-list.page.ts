@@ -3,6 +3,7 @@ import { UserService } from '../service/user.service';
 import {ToastController, ViewDidEnter} from '@ionic/angular';
 import {FoodTrackerUser} from "../model/FoodTrackerUser";
 import {today} from "ionicons/icons";
+import {zip} from "rxjs";
 
 interface ChecklistItem {
   //TODO: naret model (deletnit to)
@@ -16,27 +17,6 @@ interface ChecklistItem {
   styleUrls: ['./todo-list.page.scss'],
 })
 export class TodoListPage implements OnInit, ViewDidEnter {
-  // public items: ChecklistItem[] = [ //TODO: delete
-  //   { label: 'TODO 1', done: false },
-  //   { label: 'TODO 2', done: false },
-  //   { label: 'TODO 3', done: false },
-  //   { label: 'TODO 1', done: false },
-  //   { label: 'TODO 2', done: false },
-  //   { label: 'TODO 3', done: false },
-  //   { label: 'TODO 1', done: false },
-  //   { label: 'TODO 2', done: false },
-  //   { label: 'TODO 3', done: false },
-  //   { label: 'TODO 1', done: false },
-  //   { label: 'TODO 2', done: false },
-  //   { label: 'TODO 3', done: false },
-  //   { label: 'TODO 1', done: false },
-  //   { label: 'TODO 2', done: false },
-  //   { label: 'TODO 3', done: false },
-  //   { label: 'TODO 1', done: false },
-  //   { label: 'TODO 2', done: false },
-  //   { label: 'TODO 3', done: false },
-  // ];
-
   public dataStatusMsg: string = '';
   public selectedDate: string = new Date().toDateString();
   public selectedDepartment: string;
@@ -44,11 +24,6 @@ export class TodoListPage implements OnInit, ViewDidEnter {
   public completedTasks: number[] = [];
   public showScrollButton: boolean = false;
   private initial = true;
-  // @HostListener('window:scroll', [])
-  // onWindowScroll() {
-  //   console.log('scroll');
-  //   this.showScrollButton = window.scrollY > 1; // Adjust the threshold as needed
-  // }
 
   constructor(
     private _userService: UserService,
@@ -57,23 +32,46 @@ export class TodoListPage implements OnInit, ViewDidEnter {
   maxDate: string;
   fdUser: FoodTrackerUser;
   dataReady = false;
+  taskLoading = false;
+  taskListsAll: any = [];
+  myTaskLists: any = [];
+  selectedList: string;
   ngOnInit() {
+
     this.initData();
   }
 
   initData() {
-    this.fetchTaskLists();
-    this._userService.getUserInfo().subscribe(data => {
-      this.fdUser = data;
-      if (this.initial)
-      this.selectedDepartment = this.fdUser.departments[0];
-      this.dataReady = true;
-    });
+    this.taskLoading = true;
     if (this.initial) {
       const today = new Date();
       this.selectedDate = today.toISOString();
       this.maxDate = today.toISOString();
     }
+    zip(this._userService.getUserInfo(),
+      this._userService
+        .getTaskList(this.selectedDate.split('T')[0]))
+      .subscribe(val => {
+        this.fdUser = val[0];
+        this.taskLists = val[1];
+        if (this.initial)
+          this.selectedDepartment = this.fdUser.departments[0];
+        this.taskListsAll = this.taskLists.filter(taskL => taskL.departments.findIndex(dep => dep.departmentName === this.selectedDepartment) > -1);
+        this.myTaskLists = [];
+        for(let taskL of this.taskListsAll) {
+          let myTasks = taskL.tasks.filter(tk => tk.assigne && this.fdUser.employeeNumber === tk.assignee.userId);
+          if (myTasks && myTasks.length > 0) {
+            let lst = taskL;
+            lst.tasks = myTasks;
+            this.myTaskLists.push(lst);
+          }
+        }
+        this.selectedList = "today";
+        this.initial = false;
+        setTimeout(()=>{
+          this.taskLoading = false;}, 750);
+      });
+
   }
 
   countNumOfCompletedTasks(taskList: any) {
@@ -86,33 +84,39 @@ export class TodoListPage implements OnInit, ViewDidEnter {
     return numOfCompleted;
   }
 
-  fetchTaskLists() {
-    this._userService
-      .getTaskList(this.selectedDate.split('T')[0])
-      .subscribe({
-        next: (data) => {
-          this.taskLists = data;
-          if (this.taskLists === undefined || this.taskLists.length == 0) {
-            this.dataStatusMsg = 'No data for this date';
-          } else {
-            this.dataStatusMsg = '';
-
-            // Count number of completed tasks
-            for (let taskList of this.taskLists) {
-              let num = this.countNumOfCompletedTasks(taskList.tasks);
-              this.completedTasks.push(num);
+  updateTaskLists() {
+    this.taskLoading = true;
+    if(!this.fdUser) {
+      this.initData();
+    } else {
+      this._userService
+        .getTaskList(this.selectedDate.split('T')[0]).subscribe({
+        next: val => {
+          this.taskLists = val;
+          this.taskListsAll = this.taskLists.filter(taskL => taskL.departments.findIndex(dep => dep.departmentName === this.selectedDepartment) > -1 );
+          this.myTaskLists = [];
+          for(let taskL of this.taskListsAll) {
+            let myTasks = taskL.tasks.filter(tk => tk.assignee && this.fdUser.employeeNumber === tk.assignee.userId);
+            if (myTasks && myTasks.length > 0) {
+              let lst = taskL;
+              lst.tasks = myTasks;
+              this.myTaskLists.push(lst);
             }
           }
+          setTimeout(()=>{
+            this.taskLoading = false;}, 750);
         },
-        error: (error) => {
-          this.dataStatusMsg =
-            'There was problem fetching to-do list for this date';
-        },
+        error: err => {
+          setTimeout(()=>{
+            this.taskLoading = false;}, 750);
+        }
       });
+    }
   }
 
   onDepartmetnChange(depName) {
     this.selectedDepartment = depName;
+    this.updateTaskLists();
   }
 
   toggleDone(task: any, taskList: any, indexI: number) {
@@ -175,7 +179,8 @@ export class TodoListPage implements OnInit, ViewDidEnter {
     protected readonly Date = Date;
 
   ionViewDidEnter(): void {
-    this.initData();
-    this.initial = false;
+    if (!this.initial) {
+      this.updateTaskLists();
+    }
   }
 }
