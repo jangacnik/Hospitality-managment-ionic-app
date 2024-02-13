@@ -3,11 +3,18 @@
   justify-content: space-between; /* This property places items at the beginning and end of the container */
   align-items: center;
 }
-
+#fake-click {
+  display: none;
+}
 
 .item-done {
   text-decoration: line-through;
 }
 ion-header ion-toolbar {
   --background: url("../../assets/Untitled.svg") no-repeat center;
+}
+
+.selected-btn {
+  --background: #efd7b2;
+  --border-radius: 10px;
 }

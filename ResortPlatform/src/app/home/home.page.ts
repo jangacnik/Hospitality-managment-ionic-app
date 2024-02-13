@@ -10,19 +10,19 @@ import { FoodTrackerUser } from '../model/FoodTrackerUser';
 import { FoodTrackerUserWithMealEntry } from '../model/FoodTrackerUserWithMealEntry';
 import { MealEntry } from '../model/MealEntry';
 import { retry } from 'rxjs';
-import { AlertController, ToastController } from '@ionic/angular';
-import {today} from "ionicons/icons";
+import {AlertController, ToastController, ViewDidEnter} from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit, OnChanges {
+export class HomePage implements OnInit, OnChanges, ViewDidEnter {
   reservationOptions = [
     { text: 'Lunch', checked: false },
     { text: 'Dinner', checked: false },
   ];
+  showToast = false;
   openModal = false;
   openReservationModal = false;
   isReservationBtnActive = false;
@@ -61,6 +61,10 @@ export class HomePage implements OnInit, OnChanges {
 
   minDate: string = undefined;
   ngOnInit(): void {
+   this.init();
+  }
+
+  init() {
     this.todaysDate = new Date();
     this.storageService.jwtChangedSub.subscribe((jwt) => {
       if (jwt) {
@@ -103,8 +107,9 @@ export class HomePage implements OnInit, OnChanges {
   async presentToast(msg: string) {
     const toast = await this._toastController.create({
       message: msg,
+      color: "success",
       duration: 4000,
-      position: 'bottom',
+      position: 'top'
     });
 
     await toast.present();
@@ -214,5 +219,9 @@ export class HomePage implements OnInit, OnChanges {
           this.presentToast('Meal was successfully added!');
         });
     });
+  }
+
+  ionViewDidEnter(): void {
+    this.init();
   }
 }

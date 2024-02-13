@@ -41,6 +41,7 @@ ion-datetime {
   --background: #fff1f2;
   --background-rgb: 255, 241, 242;
   width: 100%;
+  height: 100%;
   border-radius: 16px;
   box-shadow: rgba(var(--ion-color-rose-rgb), 0.3) 0px 10px 15px -3px;
 }
@@ -120,6 +121,37 @@ html {
   --ion-safe-area-bottom: 14px;
   ion-title, ion-text {
     --ion-font-family: 'worksans';
+  }
+
+  .btn-icon-only {
+    --border-style: none;
+    --border-color: 0;
+    --box-shadow: none;
+    --background: transparent;
+    //color: #eb445a;
+  }
+
+  --color-checked: var(--ion-color-primary);
+  ion-segment {
+    width: 100%;
+    ion-segment-button {
+      font-family: worksans-semibold;
+      border-radius: 10px;
+
+      &::part(indicator) {
+        //height: 100%;
+        border-width: 3px;
+        border-radius: 10px;
+        border-color: #ccaf8a;
+        --box-shadow: none;
+        --background: #ccaf8a;
+      }
+      &::part(indicator-background) {
+        background: #ccaf8a;
+
+      }
+    }
+
   }
 }
 

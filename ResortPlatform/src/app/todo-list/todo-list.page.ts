@@ -1,6 +1,8 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { UserService } from '../service/user.service';
-import { ToastController } from '@ionic/angular';
+import {ToastController, ViewDidEnter} from '@ionic/angular';
+import {FoodTrackerUser} from "../model/FoodTrackerUser";
+import {today} from "ionicons/icons";
 
 interface ChecklistItem {
   //TODO: naret model (deletnit to)
@@ -13,7 +15,7 @@ interface ChecklistItem {
   templateUrl: './todo-list.page.html',
   styleUrls: ['./todo-list.page.scss'],
 })
-export class TodoListPage implements OnInit {
+export class TodoListPage implements OnInit, ViewDidEnter {
   // public items: ChecklistItem[] = [ //TODO: delete
   //   { label: 'TODO 1', done: false },
   //   { label: 'TODO 2', done: false },
@@ -34,12 +36,14 @@ export class TodoListPage implements OnInit {
   //   { label: 'TODO 2', done: false },
   //   { label: 'TODO 3', done: false },
   // ];
+
   public dataStatusMsg: string = '';
-  public selectedDate = new Date();
+  public selectedDate: string = new Date().toDateString();
+  public selectedDepartment: string;
   public taskLists: any;
   public completedTasks: number[] = [];
   public showScrollButton: boolean = false;
-
+  private initial = true;
   // @HostListener('window:scroll', [])
   // onWindowScroll() {
   //   console.log('scroll');
@@ -50,9 +54,26 @@ export class TodoListPage implements OnInit {
     private _userService: UserService,
     private _toastController: ToastController
   ) {}
-
+  maxDate: string;
+  fdUser: FoodTrackerUser;
+  dataReady = false;
   ngOnInit() {
+    this.initData();
+  }
+
+  initData() {
     this.fetchTaskLists();
+    this._userService.getUserInfo().subscribe(data => {
+      this.fdUser = data;
+      if (this.initial)
+      this.selectedDepartment = this.fdUser.departments[0];
+      this.dataReady = true;
+    });
+    if (this.initial) {
+      const today = new Date();
+      this.selectedDate = today.toISOString();
+      this.maxDate = today.toISOString();
+    }
   }
 
   countNumOfCompletedTasks(taskList: any) {
@@ -67,7 +88,7 @@ export class TodoListPage implements OnInit {
 
   fetchTaskLists() {
     this._userService
-      .getTaskList(this.selectedDate.toISOString().split('T')[0])
+      .getTaskList(this.selectedDate.split('T')[0])
       .subscribe({
         next: (data) => {
           this.taskLists = data;
@@ -88,6 +109,10 @@ export class TodoListPage implements OnInit {
             'There was problem fetching to-do list for this date';
         },
       });
+  }
+
+  onDepartmetnChange(depName) {
+    this.selectedDepartment = depName;
   }
 
   toggleDone(task: any, taskList: any, indexI: number) {
@@ -118,44 +143,39 @@ export class TodoListPage implements OnInit {
 
   setTimeZone() {
     // Get timezone offset
-    const offset = this.selectedDate.getTimezoneOffset();
+    const date = new Date(this.selectedDate);
+    const offset = date.getTimezoneOffset();
     this.selectedDate = new Date(
-      this.selectedDate.getTime() - offset * 60 * 1000
-    );
+      date.getTime() - offset * 60 * 1000
+    ).toISOString();
   }
 
-  changeDate(num: number) {
-    this.selectedDate = new Date(
-      this.selectedDate.getFullYear(),
-      this.selectedDate.getMonth(),
-      this.selectedDate.getDate() + num
-    );
 
-    this.setTimeZone();
-    this.fetchTaskLists();
+
+
+  showCalendar = false;
+  openCalendar() {
+    this.showCalendar = true;
   }
-
-  isButtonDisabled() {
-    if (this.selectedDate.toDateString() == new Date().toDateString()) {
-      return true;
-    }
-    return false;
+  cancelCalendar() {
+    this.showCalendar = false;
   }
-
-  // scrollToTop() {
-  //   document.body.scrollTop = 0; // For Safari
-  //   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
-  // }
-
   async presentToast(msg: string) {
     //TODO: premaknit v nek service za vse komponente
     const toast = await this._toastController.create({
       message: msg,
       duration: 4000,
-      position: 'bottom',
+      position: 'top',
       color: 'danger',
     });
 
     await toast.present();
+  }
+
+    protected readonly Date = Date;
+
+  ionViewDidEnter(): void {
+    this.initData();
+    this.initial = false;
   }
 }
