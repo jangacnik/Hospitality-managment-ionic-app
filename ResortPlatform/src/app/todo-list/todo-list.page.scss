@@ -31,3 +31,22 @@ ion-header ion-toolbar {
 .segment-invisible {
   visibility: hidden;
 }
+ion-checkbox {
+  width: 100%;
+  --size: 36px;
+  --background-checked: #af8550;
+  --checkbox-background: #ece2e1;
+  background-image: transparent;
+}
+
+ion-checkbox::part(container) {
+  border-radius: 30px;
+  border-color: #af8550;
+  --background-checked: #af8550;
+}
+
+.ios.ion-card {
+  ion-card-title {
+    padding-bottom: 0; padding-left: 0;
+  }
+}

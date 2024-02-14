@@ -66,33 +66,86 @@
       </div>
     </ion-row>
   <ion-row  *ngIf="!taskLoading">
-    <ion-col>
-      <ion-accordion-group   *ngIf="selectedList === 'today'" [multiple]="true">
-        <ion-accordion *ngFor="let tasks of taskListsAll; let i = index" >
-          <ion-item slot="header" lines="none" class="gradient-accordion ion-text-wrap ion-wrap">
-            <ion-label class="ion-text-wrap ion-wrap">{{tasks.title}}</ion-label>
-          </ion-item>
-          <div class="ion-padding" slot="content">
-            <ion-item *ngFor="let tk of taskLists[i].tasks">
-              <ion-label>{{tk.title}}</ion-label>
-            </ion-item>
-          </div>
-        </ion-accordion>
-      </ion-accordion-group>
+    <ion-infinite-scroll>
 
-      <ion-accordion-group  *ngIf="selectedList === 'mine'" [multiple]="true">
-        <ion-accordion *ngFor="let tasks of myTaskLists; let i = index" >
-          <ion-item slot="header" lines="none" class="gradient-accordion ion-text-wrap">
-            <ion-label  class="ion-text-wrap">{{tasks.title}}</ion-label>
-          </ion-item>
-          <div class="ion-padding" slot="content">
-            <ion-item *ngFor="let tk of tasks.tasks">
-              <ion-label>{{tk.title}}</ion-label>
-            </ion-item>
-          </div>
-        </ion-accordion>
-      </ion-accordion-group>
-    </ion-col>
+        <ion-col>
+          <ion-accordion-group   *ngIf="selectedList === 'today'" [multiple]="true">
+            <ion-accordion *ngFor="let tasks of taskListsAll; let i = index" >
+              <ion-item slot="header" lines="none" class="gradient-accordion ion-text-wrap ion-text-start">
+                <ion-label class="ion-text-wrap ion-text-start">{{tasks.title}}</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content" style="padding-top: 0">
+                <ion-card *ngFor="let tk of taskListsAll[i].tasks" style="width: 100%; margin-left: 0; border-radius: 15px; padding-left: 0">
+                  <ion-card-title class="ion-padding" >
+                    <ion-row>
+                      <ion-col size="10">
+                        {{tk.title}}
+                        <ion-text>
+                          <h6 *ngIf="tk.assignee">{{tk.assignee.name}} {{tk.assignee.surname}}</h6>
+                          <h6 *ngIf="!tk.assignee">No Assignee</h6>
+                        </ion-text></ion-col>
+                      <ion-col size="2">
+                        <ion-checkbox
+                          labelPlacement="start"
+                          class="ion-margin"
+                          alignment="end"
+                          [disabled]="disableTask()"
+                          [(ngModel)]="tk.completed"
+                          [class]="tk.completed ? 'item-done' : ''"
+                          (ionChange)="toggleDone(tk, tasks, i)"
+                        >
+                        </ion-checkbox
+                        >
+
+                      </ion-col>
+                    </ion-row>
+                  </ion-card-title>
+                </ion-card>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+
+          <ion-accordion-group  *ngIf="selectedList === 'mine'" [multiple]="true">
+            <ion-accordion *ngFor="let tasks of myTaskLists; let i = index" >
+              <ion-item slot="header" lines="none" class="gradient-accordion ion-text-wrap">
+                <ion-label  class="ion-text-wrap">{{tasks.title}}</ion-label>
+              </ion-item>
+
+              <div class="ion-padding" slot="content">
+                <ion-infinite-scroll>
+                  <ion-infinite-scroll-content>
+                    <ion-card *ngFor="let tk of myTaskLists[i].tasks" style="width: 100%; margin-left: 0; border-radius: 15px; padding-left: 0">
+                      <ion-card-title class="ion-padding" style="padding-bottom: 0; padding-left: 0">
+                        <ion-row>
+                          <ion-col size="10">
+                            {{tk.title}}
+                            <ion-text>
+                              <h6 *ngIf="tk.assignee">{{tk.assignee.name}} {{tk.assignee.surname}}</h6>
+                              <h6 *ngIf="!tk.assignee">No Assignee</h6>
+                            </ion-text></ion-col>
+                          <ion-col size="2">
+                            <ion-checkbox
+                              labelPlacement="start"
+                              class="ion-margin"
+                              alignment="end"
+                              [disabled]="disableTask()"
+                              [(ngModel)]="tk.completed"
+                              [class]="tk.completed ? 'item-done' : ''"
+                              (ionChange)="toggleDone(tk, tasks, i)"
+                            >
+                            </ion-checkbox
+                            >
+                          </ion-col>
+                        </ion-row>
+                      </ion-card-title>
+                    </ion-card>
+                  </ion-infinite-scroll-content>
+                </ion-infinite-scroll>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+        </ion-col>
+    </ion-infinite-scroll>
   </ion-row>
   </ion-grid>
 <!--  <div class="flexContainer">-->

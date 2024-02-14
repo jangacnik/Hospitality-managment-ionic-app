@@ -29,6 +29,7 @@ export class TodoListPage implements OnInit, ViewDidEnter {
     private _userService: UserService,
     private _toastController: ToastController
   ) {}
+  todayDate: Date = undefined;
   maxDate: string;
   fdUser: FoodTrackerUser;
   dataReady = false;
@@ -36,6 +37,7 @@ export class TodoListPage implements OnInit, ViewDidEnter {
   taskListsAll: any = [];
   myTaskLists: any = [];
   selectedList: string;
+  sDate: Date= undefined;
   ngOnInit() {
 
     this.initData();
@@ -45,8 +47,12 @@ export class TodoListPage implements OnInit, ViewDidEnter {
     this.taskLoading = true;
     if (this.initial) {
       const today = new Date();
-      this.selectedDate = today.toISOString();
+      this.todayDate = today;
       this.maxDate = today.toISOString();
+      this.selectedDate = today.toISOString();
+      this.todayDate.setHours(0,0,0,0);
+      this.sDate = this.todayDate;
+
     }
     zip(this._userService.getUserInfo(),
       this._userService
@@ -56,9 +62,11 @@ export class TodoListPage implements OnInit, ViewDidEnter {
         this.taskLists = val[1];
         if (this.initial)
           this.selectedDepartment = this.fdUser.departments[0];
-        this.taskListsAll = this.taskLists.filter(taskL => taskL.departments.findIndex(dep => dep.departmentName === this.selectedDepartment) > -1);
+        this.taskListsAll = this.taskLists.filter(taskL => taskL.departments
+          .findIndex(dep => dep.departmentName === this.selectedDepartment) > -1);
+        const filteredTaks = JSON.parse(JSON.stringify(this.taskListsAll));
         this.myTaskLists = [];
-        for(let taskL of this.taskListsAll) {
+        for(let taskL of filteredTaks) {
           let myTasks = taskL.tasks.filter(tk => tk.assigne && this.fdUser.employeeNumber === tk.assignee.userId);
           if (myTasks && myTasks.length > 0) {
             let lst = taskL;
@@ -74,6 +82,10 @@ export class TodoListPage implements OnInit, ViewDidEnter {
 
   }
 
+  disableTask() {
+    return this.todayDate > this.sDate;
+  }
+
   countNumOfCompletedTasks(taskList: any) {
     let numOfCompleted = 0;
     for (let task of taskList) {
@@ -86,23 +98,33 @@ export class TodoListPage implements OnInit, ViewDidEnter {
 
   updateTaskLists() {
     this.taskLoading = true;
+    this.sDate = new Date(this.selectedDate);
+    this.sDate.setHours(0,0,0,0);
     if(!this.fdUser) {
       this.initData();
     } else {
       this._userService
         .getTaskList(this.selectedDate.split('T')[0]).subscribe({
-        next: val => {
+        next: (val: any) => {
           this.taskLists = val;
-          this.taskListsAll = this.taskLists.filter(taskL => taskL.departments.findIndex(dep => dep.departmentName === this.selectedDepartment) > -1 );
+          console.log(val);
+          this.taskListsAll = val.filter(taskL =>
+            taskL.departments.findIndex(dep => dep.departmentName === this.selectedDepartment) !== -1);
+
+          const filteredTaks = JSON.parse(JSON.stringify(this.taskListsAll));
           this.myTaskLists = [];
-          for(let taskL of this.taskListsAll) {
-            let myTasks = taskL.tasks.filter(tk => tk.assignee && this.fdUser.employeeNumber === tk.assignee.userId);
+          // const filteredTasks =
+          for(let taskL of filteredTaks) {
+            const myTasks = taskL.tasks.filter(tk => tk.assignee && this.fdUser.employeeNumber === tk.assignee.userId);
+            console.log(myTasks, "mytasks");
             if (myTasks && myTasks.length > 0) {
               let lst = taskL;
               lst.tasks = myTasks;
               this.myTaskLists.push(lst);
             }
+
           }
+          console.log(this.taskListsAll);
           setTimeout(()=>{
             this.taskLoading = false;}, 750);
         },
