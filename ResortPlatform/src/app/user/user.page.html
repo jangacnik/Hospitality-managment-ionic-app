@@ -1,24 +1,65 @@
-
-
 <ion-content [fullscreen]="true">
-  <ion-list [inset]="true" *ngIf="usr">
-    <ion-item>
-      <ion-label>Departments: {{usr.departments.join(", ")}}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Employee No: {{usr.employeeNumber}}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>E-mail: {{usr.email}}</ion-label>
-    </ion-item>
-  </ion-list>
-
-  <ion-button
-    class="center-button"
-    color="primary"
-    (click)="openPasswordDialog(true)"
-    >Change password</ion-button
-  >
+  <ion-grid>
+    <ion-row class="ion-no-margin ion-no-padding">
+      <ion-col size="12" class="ion-no-margin ion-no-padding">
+        <ion-text color="primary" class="ion-no-margin ion-no-padding"
+          ><h2
+            style="font-weight: bold; font-family: 'baskerville'; width: 100%"
+          >
+            My PROFILE
+          </h2>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" class="ion-text-center">
+        <div class="circle-container">
+          <ion-icon
+            name="person-outline"
+            class="circle-icon"
+            size="large"
+            color="primary"
+          ></ion-icon>
+        </div>
+      </ion-col>
+    </ion-row>
+    <div *ngIf="usr">
+      <ion-row class="ion-margin-top ion-margin-horizontal">
+        <ion-col class="user-info-container ion-padding">
+          <ion-label class="info-label">Name, Surname: </ion-label>
+          <ion-text>{{usr.firstName}} {{usr.lastName}}</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin-top ion-margin-horizontal">
+        <ion-col class="user-info-container ion-padding">
+          <ion-label class="info-label">Username:</ion-label>
+          <ion-text></ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin-top ion-margin-horizontal">
+        <ion-col class="user-info-container ion-padding">
+          <ion-label class="info-label">E-mail: </ion-label>
+          <ion-text>{{usr.email}}</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin-top ion-margin-horizontal">
+        <ion-col class="user-info-container ion-padding">
+          <ion-label class="info-label">Departments: </ion-label>
+          <ion-text>{{usr.departments.join(", ")}}</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin-top ion-margin-horizontal">
+        <ion-col
+          (click)="openPasswordDialog(true)"
+          class="user-info-container ion-padding"
+        >
+          <ion-label class="change-password-text center-button"
+            >Change Password?</ion-label
+          >
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-grid>
 
   <ion-modal [isOpen]="openPasswordModal" backdropDismiss="false">
     <ng-template>
