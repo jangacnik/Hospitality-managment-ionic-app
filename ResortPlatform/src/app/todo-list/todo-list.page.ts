@@ -60,8 +60,10 @@ export class TodoListPage implements OnInit, ViewDidEnter {
       .subscribe(val => {
         this.fdUser = val[0];
         this.taskLists = val[1];
-        if (this.initial)
-          this.selectedDepartment = this.fdUser.departments[0];
+        if (this.initial) {
+          const dep: any = this.fdUser.departments[0];
+          this.selectedDepartment = dep.departmentName;
+        }
         this.taskListsAll = this.taskLists.filter(taskL => taskL.departments
           .findIndex(dep => dep.departmentName === this.selectedDepartment) > -1);
         const filteredTaks = JSON.parse(JSON.stringify(this.taskListsAll));
@@ -137,7 +139,7 @@ export class TodoListPage implements OnInit, ViewDidEnter {
   }
 
   onDepartmetnChange(depName) {
-    this.selectedDepartment = depName;
+    this.selectedDepartment = depName.departmentName;
     this.updateTaskLists();
   }
 

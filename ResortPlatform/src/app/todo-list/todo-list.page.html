@@ -5,7 +5,7 @@
             style="width: 100%; cursor: pointer"
             (click)="onDepartmetnChange(department)"
             class="btn-icon-only"
-          [ngClass]="{'selected-btn': selectedDepartment === department}">{{department}}</ion-button>
+          [ngClass]="{'selected-btn': selectedDepartment === department.departmentName}">{{department.departmentName}}</ion-button>
     </ion-menu-toggle>
   </ion-content>
 </ion-menu>
