@@ -12,3 +12,32 @@ ion-toolbar {
   display: grid;
   justify-content: center;
 }
+
+.circle-container {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  border: 0.13rem solid var(--ion-color-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.circle-icon {
+  font-size: 2em;
+}
+
+.user-info-container {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+.info-label {
+  font-weight: bold;
+}
+
+.change-password-text {
+  color: var(--ion-color-primary);
+}
