@@ -15,6 +15,13 @@ ion-row{
   justify-content: center;
   height: 100%;
 }
+.input-error {
+  border-color: red !important;
+  .input-wrapper {
+    color: red !important;
+  }
+}
+
 .input-item {
   --ion-item-background:#f6f1eb;
   border-color: #ccaf8a;

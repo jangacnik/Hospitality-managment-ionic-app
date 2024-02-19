@@ -220,6 +220,13 @@ export class HomePage implements OnInit, OnChanges, ViewDidEnter {
         });
     });
   }
+  handleRefresh(event) {
+    setTimeout(() => {
+      this.init();
+      // Any calls to load data go here
+      event.target.complete();
+    }, 1000);
+  }
 
   ionViewDidEnter(): void {
     this.init();

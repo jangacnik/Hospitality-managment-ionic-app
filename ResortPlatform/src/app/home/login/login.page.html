@@ -3,8 +3,9 @@
     <ion-row class="ion-justify-content-center">
       <ion-col size-xs="9" size-md="9">
         <form [formGroup]="loginForm">
-          <ion-item lines="full" class="input-item">
+          <ion-item lines="full" class="input-item" [ngClass]="{'input-error': hasError}">
             <ion-input
+
               label="Email"
               labelPlacement="floating"
               type="email"
@@ -13,7 +14,7 @@
             <ion-icon name="person-circle-outline" slot="start"></ion-icon>
           </ion-item>
           <br><br>
-          <ion-item lines="full" class="input-item">
+          <ion-item lines="full" class="input-item" [ngClass]="{'input-error': hasError}">
             <ion-input
               label="Password"
               labelPlacement="floating"

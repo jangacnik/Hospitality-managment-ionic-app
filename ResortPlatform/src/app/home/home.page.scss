@@ -105,22 +105,22 @@ ion-toast.custom-toast {
 ion-row.datepicker {
   ion-datetime {
     --background: #fdfdfd;
-    box-shadow: 4px 4px 4px 4px #ccaf8a;
+    box-shadow: 0.3vh 0.3vh 0.3vh #666;
   }
 }
 .reservation-type-list {
   --background: #ece2e1;
   ion-item {
     font-family: worksans;
-    font-size: 0.55em;
+    //font-size: 0.55em;
     //width: 100%;
-    border: 0.18vh solid #ccaf8a;
+    border: 0.2rem solid #ccaf8a;
     border-radius: 20px;
-    --background: #ece2e1;
+    --background: transparent;
 
     ion-checkbox {
       width: 100%;
-      --size: 5rem;
+      --size: 2rem;
       --background-checked: #af8550;
       --checkbox-background: #ece2e1;
     }
@@ -167,3 +167,4 @@ ion-list {
   color:  #414141;
   --ion-font-family: 'worksans-semibold';
 }
+

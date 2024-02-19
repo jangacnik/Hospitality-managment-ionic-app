@@ -33,20 +33,49 @@ ion-header ion-toolbar {
 }
 ion-checkbox {
   width: 100%;
-  --size: 36px;
-  --background-checked: #af8550;
-  --checkbox-background: #ece2e1;
-  background-image: transparent;
+  --size: 2.75rem;
+  --background-checked: #ffffff;
+  --checkbox-background: #ffffff;
+  --checkbox-background-checked: rgb(45, 211, 111);
+  border-color: rgb(45, 211, 111);
 }
 
 ion-checkbox::part(container) {
   border-radius: 30px;
-  border-color: #af8550;
-  --background-checked: #af8550;
+  //border-color: rgb(45, 211, 111);
+  --border-color: #af8550;
+  --border-color-checked:rgb(45, 211, 111);
+  --background-checked: rgb(45, 211, 111);
+}
+ion-card {
+  ion-card-title {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    .task-title {
+      font-family: worksans-semibold;
+    }
+  }
+  ion-checkbox {
+    //padding-bottom: 0.75rem;
+  }
+  h6 {
+       margin-bottom: 0 !important;
+     }
 }
 
 .ios.ion-card {
   ion-card-title {
     padding-bottom: 0; padding-left: 0;
+
   }
 }
+
+.select-transparent {
+  --background: transparent;
+}
+
+.task-completed {
+  --background: linear-gradient(-90deg,rgb(45, 211, 111,0.25) 0%, rgb(45, 211, 111,0.2) 33%, rgb(45, 211, 111,0.1) 100%) !important
+}
+

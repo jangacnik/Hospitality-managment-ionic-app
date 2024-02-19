@@ -16,7 +16,7 @@ const routes: Routes = [
   },
 ];
 
-LOAD_WASM().subscribe((res: any) => console.log('LOAD_WASM', res));
+LOAD_WASM().subscribe();
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),

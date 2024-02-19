@@ -69,12 +69,16 @@ ion-datetime {
 }
 
 .gradient-accordion {
-  --ion-font-family: 'worksans-semibold';
-  border-radius: 15px;
   margin-bottom: 1rem;
-  --color: linear-gradient(90deg,rgba(225,205,175,0.6) 0%, rgba(199,160,89,0.45) 33%, rgba(190,147,80,0.4) 100%) !important;
-  --background: linear-gradient(90deg,rgba(225,205,175,0.6) 0%, rgba(199,160,89,0.45) 33%, rgba(190,147,80,0.4) 100%) !important;
-  background-image: linear-gradient(90deg,rgba(225,205,175,0.6) 0%, rgba(199,160,89,0.45) 33%, rgba(190,147,80,0.4) 100%) !important;
+  ion-item {
+    --ion-font-family: 'worksans-semibold';
+    border-radius: 15px;
+    //margin-bottom: 1rem;
+    --color: linear-gradient(90deg,rgba(225,205,175,0.6) 0%, rgba(199,160,89,0.45) 33%, rgba(190,147,80,0.4) 100%) !important;
+    --background: transparent;
+    background-image: linear-gradient(90deg,rgba(225,205,175,0.6) 0%, rgba(199,160,89,0.45) 33%, rgba(190,147,80,0.4) 100%) !important;
+}
+
 
 }
 
@@ -86,6 +90,7 @@ ion-grid {
     border-radius: 15px;
   }
   ion-button.gradient-btn {
+
     --ion-font-family: 'worksans-semibold';
     border-radius: 15px;
     font-size: 1.2em;

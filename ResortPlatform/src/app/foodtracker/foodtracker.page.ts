@@ -20,6 +20,6 @@ export class FoodtrackerPage implements OnInit{
 
   scanWasSuccessful(json: string){
     this.openModal = false;
-    console.log(json);
+    // console.log(json);
   }
 }

@@ -1,24 +1,30 @@
 <ion-content [fullscreen]="true" style="height: 100vh;overflow: hidden">
+
+
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div style=" overflow: hidden">
     <ion-grid *ngIf="!showLogin" style="overflow: hidden">
       <ion-row class="ion-no-margin ion-no-padding">
         <ion-col size="12" class="ion-no-margin ion-no-padding">
-            <ion-text  color="primary"  class="ion-no-margin ion-no-padding"
-                      ><h2 style="font-weight: bold; font-family: 'baskerville';width: 100%; ">Welcome to Food Tracker!</h2>
-              <h3 class="ion-no-margin ion-no-padding" style="color:#414141; font-size: 1rem; font-weight: normal; font-family: 'worksans';">{{ todaysDate | date: 'EEEE, dd.MM.yyyy' }}
-              </h3>
-            </ion-text>
+          <ion-text color="primary" class="ion-no-margin ion-no-padding"
+          ><h2 style="font-weight: bold; font-family: 'baskerville';width: 100%; ">Welcome to Food Tracker!</h2>
+            <h3 class="ion-no-margin ion-no-padding"
+                style="color:#414141; font-size: 1rem; font-weight: normal; font-family: 'worksans';">{{ todaysDate | date: 'EEEE, dd.MM.yyyy' }}
+            </h3>
+          </ion-text>
         </ion-col>
       </ion-row>
 
       <ion-row class="ion-no-padding ion-no-margin">
         <ion-col class="ion-no-padding ion-no-margin">
-            <ion-text>
-              <h2 style="padding-left: 3vh; padding-bottom: 0; font-weight: bold;  margin-top: 1vh"
-              class="ion-text-left ion-no-margin ion-no-padding works-semibold">
-                New Meal?
-              </h2>
-            </ion-text>
+          <ion-text>
+            <h2 style="padding-left: 3vh; padding-bottom: 0; font-weight: bold;  margin-top: 1vh"
+                class="ion-text-left ion-no-margin ion-no-padding works-semibold">
+              New Meal?
+            </h2>
+          </ion-text>
         </ion-col>
       </ion-row>
       <ion-row class="ion-no-padding ">
@@ -33,15 +39,15 @@
           >
         </ion-col>
       </ion-row>
-      <ion-row  class="ion-no-padding ion-margin" style="margin-bottom: 0.75vh; margin-top: 0.75vh">
+      <ion-row class="ion-no-padding ion-margin" style="margin-bottom: 0.75vh; margin-top: 0.75vh">
         <ion-col class="ion-no-padding ion-no-margin">
-            <ion-text>
-              <h4  style="padding-left: 1.8vh; padding-bottom: 0"
-                   class="ion-text-left ion-no-margin ion-no-padding works">
+          <ion-text>
+            <h4 style="padding-left: 1.8vh; padding-bottom: 0"
+                class="ion-text-left ion-no-margin ion-no-padding works">
 
-                Meals This Month:
-              </h4>
-            </ion-text>
+              Meals This Month:
+            </h4>
+          </ion-text>
         </ion-col>
       </ion-row>
       <ion-row class="ion-no-padding ion-no-margin">
@@ -68,9 +74,9 @@
       </ion-row>
       <ion-row class="ion-no-padding ion-no-margin">
         <ion-col class="ion-no-padding ion-no-margin">
-          <ion-text >
+          <ion-text>
             <h2 style="padding-left: 1.9vh; padding-bottom: 0; font-weight: bold"
-                       class="ion-text-left ion-no-margin ion-no-padding works-semibold">Meal Reservation?
+                class="ion-text-left ion-no-margin ion-no-padding works-semibold">Meal Reservation?
             </h2>
           </ion-text>
         </ion-col>
@@ -87,11 +93,11 @@
           </ion-button>
         </ion-col>
       </ion-row>
-      <ion-row  class="ion-no-padding ion-margin" style="margin-bottom: 0.75vh; margin-top: 0.75vh">
+      <ion-row class="ion-no-padding ion-margin" style="margin-bottom: 0.75vh; margin-top: 0.75vh">
         <ion-col class="ion-no-padding ion-no-margin">
           <ion-text>
-            <h4  style="padding-left: 1.8vh; padding-bottom: 0"
-                 class="ion-text-left ion-no-margin ion-no-padding works">
+            <h4 style="padding-left: 1.8vh; padding-bottom: 0"
+                class="ion-text-left ion-no-margin ion-no-padding works">
 
               My Meal Reservations
             </h4>
@@ -142,7 +148,11 @@
           <ion-toolbar>
             <ion-title></ion-title>
             <ion-buttons slot="end">
-              <ion-button (click)="openDialog(false)">Close</ion-button>
+              <ion-button class="transparent-ios" (click)="openDialog(false)"
+              >
+                <ion-icon style="font-size: 2rem" name="close-outline"></ion-icon>
+              </ion-button
+              >
             </ion-buttons>
           </ion-toolbar>
         </ion-header>
@@ -162,25 +172,28 @@
             <ion-title></ion-title>
             <ion-buttons slot="end">
               <ion-button class="transparent-ios" (click)="openReservationDialog(false)"
-              ><ion-icon style="font-size: 3em" name="close-outline"></ion-icon>
+              >
+                <ion-icon style="font-size: 2rem" name="close-outline"></ion-icon>
               </ion-button
               >
             </ion-buttons>
           </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
-          <ion-row class="ion-justify-content-center">
-            <ion-col size="12">
-              <ion-item lines="none">
-                <ion-title  style="font-size: 2em; margin-left: 0; padding-left: 0; padding-right: 0" class="ion-text-center">Meal Reservation</ion-title>
-              </ion-item>
+          <ion-row class="ion-justify-content-center ion-align-items-center">
+            <ion-col size="12" class="ion-text-center ion-align-items-center">
+              <ion-text class=" ion-no-padding ion-no-margin ion-text-center">
+                <h1 class=" ion-no-padding ion-no-margin ion-text-center">Meal Reservation
+                </h1></ion-text>
             </ion-col>
           </ion-row>
-          <ion-row class="ion-justify-content-center ion-no-padding ion-no-margin" style="padding-bottom: 1vh">
-            <ion-col size="12">
-              <ion-item lines="none">
-                <ion-title class="ion-text-center">{{resDate | date: "EEEE, dd.MM.yyyy"}}</ion-title>
-              </ion-item>
+          <ion-row class="ion-align-items-center ion-no-padding ion-no-margin" style="padding-bottom: 1rem">
+            <ion-col size="12" class="ion-text-center ion-align-items-center  ion-no-padding ion-no-margin">
+              <ion-text class=" ion-no-padding ion-no-margin">
+                <h4 class=" ion-no-padding ion-no-margin">
+                  {{resDate | date: "EEEE, dd.MM.yyyy"}}
+                </h4>
+              </ion-text>
             </ion-col>
           </ion-row>
           <ion-row class="ion-justify-content-center datepicker">
@@ -190,9 +203,10 @@
           <ion-row class="ion-margin ion-no-padding" style="margin-left: 0; padding-left: 0; margin-bottom: 0">
             <ion-col size="12" class="ion-no-padding">
               <ion-item lines="none">
-                <ion-title style="font-size: 2em;margin-left: 0; padding-left: 0"
-                >Meal Type:
-                </ion-title
+                <ion-text style="margin-left: 0; padding-left: 0"
+                >
+                  <h3>Meal Type:</h3>
+                </ion-text
                 >
               </ion-item>
             </ion-col>
@@ -200,9 +214,10 @@
           <ion-row class="ion-no-margin ion-no-padding">
             <ion-col size="12">
               <ion-list lines="none" class="reservation-type-list">
-                <ion-item style="margin-bottom: 1.5vh" *ngFor="let opt of reservationOptions"
+                <ion-item style="margin-bottom: 1rem" *ngFor="let opt of reservationOptions"
                 >
                   <ion-checkbox
+                    style="background: transparent"
                     justify="space-between"
                     [(ngModel)]="opt.checked"
                     (ionChange)="changeEvent($event)"
@@ -214,7 +229,7 @@
             <ion-col></ion-col>
           </ion-row>
 
-          <ion-button class="gradient-btn" shape="default" size="large" style="width: 100%"
+          <ion-button class="gradient-btn" shape="default" size="large" style="width: 100%; margin-bottom: 6rem"
                       (click)="addReservationBtn()"
                       [disabled]="!isReservationBtnActive"
           >SAVE

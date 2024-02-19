@@ -84,4 +84,10 @@ export class UserService {
       dataModel
     );
   }
+
+  public getAvailableShifts(date: string, depId: string): Observable<any> {
+    return this.http.get<any>(
+      environment.baseUrlTest + `admin/${date}/available/${depId}`
+    );
+  }
 }

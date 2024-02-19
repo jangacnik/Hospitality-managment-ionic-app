@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
 import { StorageService } from '../../service/storage.service';
 import { Path } from 'src/app/shared/enums/Paths';
+import {ToastController} from "@ionic/angular";
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -13,12 +14,13 @@ export class LoginPage implements OnInit {
   // @Output() loggedInSuccess: EventEmitter<null> = new EventEmitter<null>();
 
   public loginForm: FormGroup;
-
+  hasError = false;
   constructor(
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
     private storage: StorageService,
-    private _router: Router
+    private _router: Router,
+    private _toastController: ToastController
   ) {
     this.loginForm = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -38,6 +40,23 @@ export class LoginPage implements OnInit {
         this.storage.saveJwt(res.token, res.refreshToken);
         // this.loggedInSuccess.emit();
         this._router.navigate([Path.FOOD_TRACKER]);
-      });
+      },
+        error => {
+          this.hasError = true;
+          this.presentToast("Email or Password incorrect, please try again");
+          this.loginForm.controls["password"].setErrors({'incorrect': true});
+        });
+  }
+
+  async presentToast(msg: string) {
+    //TODO: premaknit v nek service za vse komponente
+    const toast = await this._toastController.create({
+      message: msg,
+      duration: 4000,
+      position: 'top',
+      color: 'danger',
+    });
+
+    await toast.present();
   }
 }
