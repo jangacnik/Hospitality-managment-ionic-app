@@ -90,8 +90,7 @@ export class TodoListPage implements OnInit, ViewDidEnter {
 
           this.selectedDepartment = dep.departmentName;
         }
-        this.taskListsAll = this.taskLists.filter(taskL => taskL.departments
-          .findIndex(dep => dep.departmentName === this.selectedDepartment) > -1);
+        this.taskListsAll = this.filterTaskList(this.taskLists);
         const filteredTaks = JSON.parse(JSON.stringify(this.taskListsAll));
         this.myTaskLists = [];
         for(let taskL of filteredTaks) {
@@ -109,6 +108,23 @@ export class TodoListPage implements OnInit, ViewDidEnter {
           this.taskLoading = false;}, 750);
       });
 
+  }
+
+  filterTaskList(taskList) {
+    let lists = [];
+    let listIds = []
+    for (let tasks of taskList) {
+        const f = tasks.departments.filter(t => t.departmentName === this.selectedDepartment);
+        if (f.length > 0) {
+          listIds.push(tasks.id);
+          lists.push(tasks);
+        }
+    }
+    return lists.filter((value, index, self) =>
+        index === self.findIndex((t) => (
+          t.id === value.id
+        ))
+    )
   }
 
   disableTask() {
@@ -143,8 +159,7 @@ export class TodoListPage implements OnInit, ViewDidEnter {
         .getTaskList(this.selectedDate.split('T')[0]).subscribe({
         next: (val: any) => {
           this.taskLists = val;
-          this.taskListsAll = val.filter(taskL =>
-            taskL.departments.findIndex(dep => dep.departmentName === this.selectedDepartment) !== -1);
+            this.taskListsAll = this.filterTaskList(this.taskLists);
           const filteredTaks = JSON.parse(JSON.stringify(this.taskListsAll));
           this.myTaskLists = [];
           // const filteredTasks =
@@ -260,7 +275,6 @@ export class TodoListPage implements OnInit, ViewDidEnter {
     this.openTaskModal = true;
   }
   onTaskClose() {
-    console.log(this.selectedTask);
     this.selectedTask = undefined;
     this.selectedTaskListId = undefined;
     this.selectedTaskIndex = undefined;

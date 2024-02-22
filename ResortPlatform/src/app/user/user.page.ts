@@ -74,6 +74,5 @@ export class UserPage implements OnInit {
 
   logout() {
     this._storageService.clearStorage();
-    this._router.navigate([Path.LOGIN]);
   }
 }

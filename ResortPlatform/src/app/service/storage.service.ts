@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import { BehaviorSubject } from 'rxjs';
+import {Path} from "../shared/enums/Paths";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root',
 })
 export class StorageService {
   jwtChangedSub = new BehaviorSubject<string>('');
-  constructor(private storage: Storage) {
+  constructor(private storage: Storage,
+              private _router: Router,) {
     this.storage.create().then(() => {
       this.storage.get('jwt').then((val) => {
         this.jwtChangedSub.next(val);
@@ -33,6 +36,7 @@ export class StorageService {
 
   public clearStorage() {
     this.storage.clear().then((r) => {
+      this._router.navigate([Path.LOGIN]);
     });
   }
 }

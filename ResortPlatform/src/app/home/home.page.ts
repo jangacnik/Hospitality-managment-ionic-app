@@ -191,6 +191,7 @@ export class HomePage implements OnInit, OnChanges, ViewDidEnter {
 
   openDialog(isOpen: boolean) {
     this.openModal = isOpen;
+    this.trackingInProgress = false;
   }
 
   openReservationDialog(isOpen: boolean) {
@@ -203,22 +204,26 @@ export class HomePage implements OnInit, OnChanges, ViewDidEnter {
     this.openReservationModal = isOpen;
   }
 
+  trackingInProgress = false;
   scanWasSuccessful(json: string) {
     this.openModal = false;
     const dataModel = {
       employeeNumber: this.usr.employeeNumber,
       qrPasscode: json,
     };
-    this.userService.trackMeal(dataModel).subscribe(() => {
-      // @ts-ignore
-      this.userService
-        .getCurrentMonthTracking(this.usr.employeeNumber)
-        .subscribe((tr) => {
-          this.usrWithTrack = tr;
-          this.meals = this.usrWithTrack.mealEntry;
-          this.presentToast('Meal was successfully added!');
-        });
-    });
+    if(!this.trackingInProgress) {
+      this.trackingInProgress = true;
+      this.userService.trackMeal(dataModel).subscribe(() => {
+        this.userService
+          .getCurrentMonthTracking(this.usr.employeeNumber)
+          .subscribe((tr) => {
+            this.usrWithTrack = tr;
+            this.meals = this.usrWithTrack.mealEntry;
+            this.presentToast('Meal was successfully added!');
+          });
+      });
+    }
+
   }
   handleRefresh(event) {
     setTimeout(() => {

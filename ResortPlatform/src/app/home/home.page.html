@@ -59,10 +59,10 @@
                   slot="content"
                   *ngIf="meals && meals.mealCount && meals.meals"
                 >
-                  <ion-item *ngFor="let item of (meals.meals | keyvalue) | reverse ">
+                  <ion-item *ngFor="let item of meals.meals | keyvalue; let i = index">
                     <ion-text>
                       <h4>
-                        Meal {{item.key}} : {{item.value | date: "dd.MM.yyyy HH:mm"}}</h4>
+                        Meal {{meals.mealCount - i}} : {{meals.meals[meals.mealCount - i] | date: "dd.MM.yyyy HH:mm"}}</h4>
                     </ion-text>
                   </ion-item>
                 </ion-list>
