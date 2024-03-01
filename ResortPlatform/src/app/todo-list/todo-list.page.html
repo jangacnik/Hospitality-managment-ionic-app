@@ -269,10 +269,11 @@
                       Description
                     </h3></ion-text>
                 </ion-row>
-                <ion-row>
+                <ion-row style="padding-top:0; white-space: pre-wrap;">
                   <ion-text>
-                    <h5 style="margin-top: 0">
-                      {{selectedTask.description}}</h5></ion-text>
+                    <h5 style="margin-top: 0"  [innerHTML]="selectedTask.description">
+                      {{selectedTask.description}}</h5>
+                  </ion-text>
                 </ion-row>
               </ion-card-title>
 
