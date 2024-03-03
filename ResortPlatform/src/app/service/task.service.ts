@@ -18,4 +18,26 @@ export class TaskService {
       },
     );
   }
+
+  public addRating(user, taskListId, taskId, rating): Observable<any> {
+    return this.http.put<any>(
+      environment.baseUrlTest + `task/archive/rate`, {
+        "user": user,
+        "taskListId": taskListId,
+        "taskId": taskId,
+        "rating": rating
+      },
+    );
+  }
+
+  public addComment(user, taskListId, taskId, comment): Observable<any> {
+    return this.http.put<any>(
+      environment.baseUrlTest + `task/archive/comment`, {
+        "user": user,
+        "taskListId": taskListId,
+        "taskId": taskId,
+        "comment": comment
+      },
+    );
+  }
 }

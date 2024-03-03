@@ -1,10 +1,10 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { UserService } from '../service/user.service';
+import {Component, OnInit} from '@angular/core';
+import {UserService} from '../service/user.service';
 import {ToastController, ViewDidEnter} from '@ionic/angular';
 import {FoodTrackerUser} from "../model/FoodTrackerUser";
-import {today} from "ionicons/icons";
 import {zip} from "rxjs";
 import {TaskService} from "../service/task.service";
+import {Keyboard, KeyboardInfo, KeyboardResize} from '@capacitor/keyboard';
 
 interface ChecklistItem {
   //TODO: naret model (deletnit to)
@@ -46,9 +46,19 @@ export class TodoListPage implements OnInit, ViewDidEnter {
 
   availableShifts: any = undefined;
   isAdmin = false;
-  ngOnInit() {
 
+
+  stars:number = 0;
+  comment: any;
+  rating: any;
+  ngOnInit() {
     this.initData();
+    Keyboard.addListener('keyboardWillShow', (info: KeyboardInfo) => {
+      Keyboard.setResizeMode({mode: KeyboardResize.Native}).then();
+    });
+    Keyboard.addListener('keyboardDidHide', () => {
+      Keyboard.setResizeMode({mode: KeyboardResize.None}).then();
+    });
   }
 
   initData() {
@@ -268,10 +278,15 @@ export class TodoListPage implements OnInit, ViewDidEnter {
   }
 
   openTaskModal = false;
+  commentText = "";
   onTaskClick(task, taskList, index) {
     this.selectedTask = task;
     this.selectedTaskListId = taskList.id;
     this.selectedTaskIndex = index;
+    this.rating = task.supervisorRatings && task.supervisorRatings[0].rating ? task.supervisorRatings[0] : undefined;
+    this.comment = this.selectedTask.supervisorComments && this.selectedTask.supervisorComments[0].supervisorComments ? this.selectedTask.supervisorComments[0] : undefined;
+    this.commentText = this.comment ? this.comment.supervisorComments: "";
+    this.stars = this.rating ? this.rating.rating : 0;
     this.openTaskModal = true;
   }
   onTaskClose() {
@@ -279,6 +294,10 @@ export class TodoListPage implements OnInit, ViewDidEnter {
     this.selectedTaskListId = undefined;
     this.selectedTaskIndex = undefined;
     this.openTaskModal = false;
+    this.rating = undefined;
+    this.stars = 0;
+    this.comment = undefined;
+    this.commentText = undefined;
   }
 
 
@@ -298,5 +317,38 @@ export class TodoListPage implements OnInit, ViewDidEnter {
       // Any calls to load data go here
       event.target.complete();
     }, 1000);
+  }
+
+  starClicked(i:number, selectedTaskListId, selectedTask){
+    const user = {
+      "userId": this.fdUser.employeeNumber,
+      "name": this.fdUser.firstName,
+      "surname": this.fdUser.lastName
+    }
+    this.stars=i;
+    this._taskService.addRating(user, selectedTaskListId, selectedTask.id, i).subscribe(
+      {
+        next: (task) =>{
+          this.selectedTask.supervisorRatings = task.supervisorRatings;
+        },
+        error: err => {}
+      }
+    );
+  }
+
+  commentWritten(selectedTaskListId, selectedTask){
+    const user = {
+      "userId": this.fdUser.employeeNumber,
+      "name": this.fdUser.firstName,
+      "surname": this.fdUser.lastName
+    }
+    this._taskService.addComment(user, selectedTaskListId, selectedTask.id, this.commentText).subscribe(
+      {
+        next: (task) =>{
+          this.selectedTask.supervisorComments = task.supervisorComments;
+        },
+        error: err => {}
+      }
+    );
   }
 }

@@ -36,7 +36,8 @@ export class StorageService {
 
   public clearStorage() {
     this.storage.clear().then((r) => {
-      this._router.navigate([Path.LOGIN]);
+      this.storage.create().then(r =>
+        this._router.navigate([Path.LOGIN]));
     });
   }
 }

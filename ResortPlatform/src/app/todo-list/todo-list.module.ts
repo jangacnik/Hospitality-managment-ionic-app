@@ -7,13 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { TodoListPageRoutingModule } from './todo-list-routing.module';
 
 import { TodoListPage } from './todo-list.page';
+import {AppModule} from "../app.module";
+import {Autosize} from "../directives/autosize";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TodoListPageRoutingModule
+    TodoListPageRoutingModule,
+    Autosize
   ],
   declarations: [TodoListPage]
 })

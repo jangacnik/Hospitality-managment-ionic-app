@@ -280,6 +280,54 @@
             </ion-card>
           </ion-col>
         </ion-row>
+          <ion-row class="ion-no-margin" *ngIf=" selectedTask.completed && (isAdmin || selectedTask.completedBy.userId === fdUser.employeeNumber)" >
+            <ion-col>
+              <ion-card  class="ion-no-margin" style="width: 100%; margin-left: 0; border-radius: 15px; padding-left: 0" >
+                <ion-card-title class="ion-padding" style="padding-bottom: 0">
+                  <ion-row>
+                    <ion-text color="primary">
+                      <h3>
+                        Feedback
+                      </h3></ion-text>
+                  </ion-row>
+
+                </ion-card-title>
+                <ion-card-content style="padding-top: 0">
+                  <ion-row style="padding-top:0; white-space: pre-wrap;" class="ion-justify-content-center">
+                    <ion-buttons>
+                      <ng-container *ngFor="let i of [1,2,3]" >
+                        <ion-button [disabled]="!isAdmin" style="color: black" (click)="starClicked(i, selectedTaskListId, selectedTask)">
+                          <ion-icon slot="icon-only" *ngIf="i<=stars" name="star">
+                          </ion-icon>
+                          <ion-icon slot="icon-only" *ngIf="i>stars" name="star-outline">
+                          </ion-icon>
+                        </ion-button>
+                      </ng-container>
+                    </ion-buttons>
+                  </ion-row>
+                  <ion-row style="padding-top:0; white-space: pre-wrap;">
+                    <ion-text>
+                      <h2>Comment</h2>
+                    </ion-text>
+                    <ion-textarea
+                            style="color:black;"
+                        [disabled]="!isAdmin"
+                        aria-label="Comment:"
+                        type="text"
+                        [counter]="true"
+                        maxlength="255"
+                        rows="1"
+                        [(ngModel)]="commentText"
+                        [autoGrow]="true"
+                        (ionChange)="commentWritten(selectedTaskListId, selectedTask)"
+                      ></ion-textarea>
+                  </ion-row>
+                </ion-card-content>
+
+
+              </ion-card>
+            </ion-col>
+          </ion-row>
         </ion-grid>
       </ion-content>
 

@@ -45,7 +45,11 @@ export class AppComponent implements OnInit {
         this._authService.refreshToken(refresh).subscribe((res) => {
           this._storageService.saveJwt(res.token, res.refreshToken);
           this.fetchUserInfo(res.token);
-        });
+        },
+          error => {
+          this._storageService.clearStorage();
+
+          });
       }
     });
   }

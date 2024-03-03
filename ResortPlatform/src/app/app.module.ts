@@ -12,6 +12,7 @@ import {JwtInterceptor} from "./interceptor/jwt.interceptor";
 import {NgxScannerQrcodeModule} from "ngx-scanner-qrcode";
 import {ZXingScannerModule} from "@zxing/ngx-scanner";
 import {ReversePipe} from "./pipes/reverse.pipe";
+import {Autosize} from "./directives/autosize";
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,7 +34,6 @@ import {ReversePipe} from "./pipes/reverse.pipe";
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
-  bootstrap: [AppComponent],
-  exports:[]
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

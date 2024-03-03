@@ -79,3 +79,33 @@ ion-card {
   --background: linear-gradient(-90deg,rgb(45, 211, 111,0.25) 0%, rgb(45, 211, 111,0.2) 33%, rgb(45, 211, 111,0.1) 100%) !important
 }
 
+  ion-button:disabled {
+    color: #af8550 !important;
+    opacity: 1 !important;
+  }
+ion-button {
+  color: #af8550 !important;
+  opacity: 1 !important;
+}
+
+
+ion-textarea:disabled {
+  color: black !important;
+  opacity: 1 !important;
+}
+ion-textarea {
+  color: black !important;
+  opacity: 1 !important;
+}
+
+.ios {
+  ion-textarea:disabled {
+    color: black !important;
+    opacity: 1 !important;
+  }
+
+  ion-textarea {
+    color: black !important;
+    opacity: 1 !important;
+  }
+}

@@ -5,6 +5,7 @@ import { AuthService } from '../../service/auth.service';
 import { StorageService } from '../../service/storage.service';
 import { Path } from 'src/app/shared/enums/Paths';
 import {ToastController} from "@ionic/angular";
+import {Keyboard, KeyboardInfo, KeyboardResize} from "@capacitor/keyboard";
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -26,9 +27,13 @@ export class LoginPage implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });
+    Keyboard.addListener('keyboardWillShow', (info: KeyboardInfo) => {
+      Keyboard.setResizeMode({mode: KeyboardResize.None}).then();
+    });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   login() {
     this._authService

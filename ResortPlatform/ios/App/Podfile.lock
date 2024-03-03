@@ -8,7 +8,7 @@ PODS:
   - CapacitorCordova (5.5.1)
   - CapacitorHaptics (5.0.6):
     - Capacitor
-  - CapacitorKeyboard (5.0.6):
+  - CapacitorKeyboard (5.0.8):
     - Capacitor
   - CapacitorStatusBar (5.0.6):
     - Capacitor
@@ -44,7 +44,7 @@ SPEC CHECKSUMS:
   CapacitorCamera: 084b0b228bba7d00587910337b1c89e93b1d32ab
   CapacitorCordova: e128cc7688c070ca0bfa439898a5f609da8dbcfe
   CapacitorHaptics: 1fffc1217c7e64a472d7845be50fb0c2f7d4204c
-  CapacitorKeyboard: b978154b024a5f65e044908e37d15b7de58b9d12
+  CapacitorKeyboard: aec619a578235c6ce279075009a2689c2cf5c42c
   CapacitorStatusBar: 565c0a1ebd79bb40d797606a8992b4a105885309
 
 PODFILE CHECKSUM: 3420292c4856337ba39c2cf742fb433e5c0bd006
