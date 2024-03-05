@@ -13,11 +13,11 @@ import { retry } from 'rxjs';
 import {AlertController, ToastController, ViewDidEnter} from '@ionic/angular';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-food-tracker',
+  templateUrl: 'food-tracker.page.html',
+  styleUrls: ['food-tracker.page.scss'],
 })
-export class HomePage implements OnInit, OnChanges, ViewDidEnter {
+export class FoodTrackerPage implements OnInit, OnChanges, ViewDidEnter {
   reservationOptions = [
     { text: 'Lunch', checked: false },
     { text: 'Dinner', checked: false },

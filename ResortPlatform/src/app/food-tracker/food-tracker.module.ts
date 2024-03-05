@@ -2,10 +2,8 @@ import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HomePage } from './home.page';
-import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
-
-import { HomePageRoutingModule } from './home-routing.module';
+import { FoodTrackerPage } from './food-tracker.page';
+import { FoodTrackerPageRoutingModule } from './food-tracker-routing.module';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 import {ReversePipe} from "../pipes/reverse.pipe";
 
@@ -14,11 +12,10 @@ import {ReversePipe} from "../pipes/reverse.pipe";
     IonicModule,
     CommonModule,
     FormsModule,
-    ExploreContainerComponentModule,
-    HomePageRoutingModule,
+    FoodTrackerPageRoutingModule,
     NgxScannerQrcodeModule,
     ReversePipe,
   ],
-  declarations: [HomePage],
+  declarations: [FoodTrackerPage],
 })
-export class HomePageModule {}
+export class FoodTrackerPageModule {}

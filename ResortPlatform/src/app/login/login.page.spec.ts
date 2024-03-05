@@ -54,10 +54,10 @@ describe('LoginPage', () => {
     expect(component.loginForm.valid).toBeTruthy();
   });
 
-  it('should navigate to home', () => {
+  it('should navigate to food-tracker', () => {
     spyOn(router, 'navigate');
     component.login();
-    expect(router.navigate).toHaveBeenCalledWith(['home']);
+    expect(router.navigate).toHaveBeenCalledWith(['food-tracker']);
   });
 
   it('should navigate to register', () => {

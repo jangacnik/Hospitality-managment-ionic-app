@@ -26,7 +26,6 @@ export class JwtInterceptor implements HttpInterceptor, OnInit {
       headers: req.headers.append('Access-Control-Allow-Origin', `*`),
     });
     if (req.url.includes("signin")) {
-
       return next.handle(req);
     }
     if (req.headers.get('Authorization')) {

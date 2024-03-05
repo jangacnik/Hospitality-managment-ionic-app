@@ -88,13 +88,30 @@ ion-button {
   opacity: 1 !important;
 }
 
+.comments {
+  .list-md {
+    background: none;
+  }
+  ion-list {
+    --background: none;
+    background: none !important;
+    ion-item {
+      --background: none !important;
+      ion-textarea:disabled {
+        --background: none !important;
+      }
+    }
+  }
+}
 
 ion-textarea:disabled {
   color: black !important;
   opacity: 1 !important;
+  --background: none;
 }
 ion-textarea {
   color: black !important;
+  --background: none;
   opacity: 1 !important;
 }
 

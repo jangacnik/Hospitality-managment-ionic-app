@@ -4,20 +4,21 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { TodoListPageRoutingModule } from './todo-list-routing.module';
 
-import { TodoListPage } from './todo-list.page';
+import { TaskListPage } from './task-list.page';
 import {AppModule} from "../app.module";
 import {Autosize} from "../directives/autosize";
+import {DateModalComponent} from "../modal/util/date-modal/date-modal.component";
+import {TaskListPageRoutingModule} from "./task-list-routing.module";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TodoListPageRoutingModule,
+    TaskListPageRoutingModule,
     Autosize
   ],
-  declarations: [TodoListPage]
+  declarations: [TaskListPage, DateModalComponent]
 })
 export class TodoListPageModule {}

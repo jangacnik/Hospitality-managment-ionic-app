@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../service/auth.service';
-import { StorageService } from '../../service/storage.service';
+import { AuthService } from '../service/auth.service';
+import { StorageService } from '../service/storage.service';
 import { Path } from 'src/app/shared/enums/Paths';
 import {ToastController} from "@ionic/angular";
 import {Keyboard, KeyboardInfo, KeyboardResize} from "@capacitor/keyboard";

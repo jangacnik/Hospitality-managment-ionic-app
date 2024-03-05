@@ -8,21 +8,14 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'home',
+        path: 'food-tracker',
         loadChildren: () =>
-          import('../home/home.module').then((m) => m.HomePageModule),
+          import('../food-tracker/food-tracker.module').then((m) => m.FoodTrackerPageModule),
       },
       {
-        path: 'foodtracker',
+        path: 'task-list',
         loadChildren: () =>
-          import('../foodtracker/foodtracker.module').then(
-            (m) => m.FoodtrackerPageModule
-          ),
-      },
-      {
-        path: 'todo-list',
-        loadChildren: () =>
-          import('../todo-list/todo-list.module').then(
+          import('../task-list/task-list.module').then(
             (m) => m.TodoListPageModule
           ),
       },
@@ -33,14 +26,14 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/home',
+        redirectTo: '/tabs/food-tracker',
         pathMatch: 'full',
       },
     ],
   },
   {
     path: '',
-    redirectTo: '/tabs/home',
+    redirectTo: '/tabs/food-tracker',
     pathMatch: 'full',
   },
 ];
